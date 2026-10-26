@@ -322,7 +322,7 @@
   };
 
   window.nav = function (pageId, el) {
-    document.querySelectorAll('.page').forEach((p) => p.classList.remove('active'));
+    document.querySelectorAll('.page, .page-view').forEach((p) => p.classList.remove('active'));
     const targetPage = document.getElementById('page-' + pageId);
     if (targetPage) targetPage.classList.add('active');
 
@@ -344,18 +344,15 @@
   window.toggleVizMode = function (boxId, mode) {
     const box = document.getElementById(boxId);
     if (!box) return;
-    const iframe = box.querySelector('.viz-iframe');
-    const img = box.querySelector('.viz-img');
-    const btns = box.querySelectorAll('.viz-toggle-btn');
+    const parent = box.closest('.card-panel') || box.parentElement;
+    const btns = parent.querySelectorAll('.btn-chart-toggle');
 
     btns.forEach((b) => b.classList.toggle('active', b.getAttribute('data-mode') === mode));
 
-    if (mode === 'interactive') {
-      if (iframe) iframe.style.display = 'block';
-      if (img) img.style.display = 'none';
+    if (mode === 'static') {
+      box.classList.add('mode-static');
     } else {
-      if (iframe) iframe.style.display = 'none';
-      if (img) img.style.display = 'block';
+      box.classList.remove('mode-static');
     }
   };
 

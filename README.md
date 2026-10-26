@@ -3,6 +3,7 @@
 
 [![Competition](https://img.shields.io/badge/Competition-DICE%20FEST%202026-00D2FF.svg)](https://www.kaggle.com/competitions)
 [![Rank](https://img.shields.io/badge/Preliminary%20Rank-%231%20National-00F5A0.svg)](#)
+[![Private LB (100% Data)](https://img.shields.io/badge/Private%20LB%20(100%25)-0.23438-gold.svg)](#)
 [![CV Score](https://img.shields.io/badge/CV%20NRMSE-0.25685-brightgreen.svg)](#)
 [![Public LB](https://img.shields.io/badge/Public%20LB-0.25457-blue.svg)](#)
 [![Physics Consistency](https://img.shields.io/badge/Thermodynamic%20EUI%20Consistency-100.000%25-orange.svg)](#)

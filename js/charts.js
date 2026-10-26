@@ -52,26 +52,42 @@
     const sel = document.getElementById('zone-region-select');
     if (!sel || !window.CASCADE_DATA || !CASCADE_DATA.zone_regions) return;
 
-    sel.innerHTML = '<option value="">-- Pilih Zona Wilayah Metropolitan (329 Klaster) --</option>';
+    sel.innerHTML = '<option value="">-- Pilih Wilayah Metropolitan (329 Klaster) --</option>';
     CASCADE_DATA.zone_regions.forEach((z) => {
       const opt = document.createElement('option');
       opt.value = z.zone_region_id;
-      opt.textContent = `Zona #${z.zone_region_id} (${z.total_buildings} Bangunan) - Rata-rata EUI: ${z.mean_eui_gas_kwh_sqm.toFixed(1)} kWh/m²`;
+      const eui = typeof z.mean_eui_gas === 'number' ? z.mean_eui_gas.toFixed(1) : '-';
+      const bldCount = (z.building_count || 0).toLocaleString('id-ID');
+      opt.textContent = `${z.zone_region_id} (${bldCount} Gedung) — Rata-rata EUI: ${eui} kWh/m²`;
       sel.appendChild(opt);
     });
 
     sel.addEventListener('change', () => {
-      const val = parseInt(sel.value);
+      const val = sel.value;
       const found = CASCADE_DATA.zone_regions.find((z) => z.zone_region_id === val);
       const resBox = document.getElementById('zone-region-details');
       if (found && resBox) {
         resBox.style.display = 'grid';
-        document.getElementById('zone-det-buildings').textContent = found.total_buildings.toLocaleString('id-ID');
-        document.getElementById('zone-det-gas').textContent = Math.round(found.mean_gas_kwh).toLocaleString('id-ID') + ' kWh';
-        document.getElementById('zone-det-elec').textContent = Math.round(found.mean_elec_kwh).toLocaleString('id-ID') + ' kWh';
-        document.getElementById('zone-det-eui').textContent = found.mean_eui_gas_kwh_sqm.toFixed(2) + ' kWh/m²';
-        document.getElementById('zone-det-hp').textContent = found.mean_heat_pump_adoption.toFixed(2) + '%';
-        document.getElementById('zone-det-clean').textContent = found.mean_clean_building_ratio.toFixed(2) + '%';
+        const bldCount = (found.building_count || 0).toLocaleString('id-ID');
+        const gas = Math.round(found.mean_macro_gas_kwh || 0).toLocaleString('id-ID') + ' kWh';
+        const elec = Math.round(found.mean_macro_elec_kwh || 0).toLocaleString('id-ID') + ' kWh';
+        const eui = (found.mean_eui_gas || 0).toFixed(2) + ' kWh/m²';
+        const hp = (found.mean_electric_heating_adoption || 0).toFixed(2) + '%';
+        const clean = (found.mean_clean_building_ratio || 0).toFixed(2) + '%';
+
+        const elBld = document.getElementById('zone-det-buildings');
+        const elGas = document.getElementById('zone-det-gas');
+        const elElec = document.getElementById('zone-det-elec');
+        const elEui = document.getElementById('zone-det-eui');
+        const elHp = document.getElementById('zone-det-hp');
+        const elClean = document.getElementById('zone-det-clean');
+
+        if (elBld) elBld.textContent = bldCount;
+        if (elGas) elGas.textContent = gas;
+        if (elElec) elElec.textContent = elec;
+        if (elEui) elEui.textContent = eui;
+        if (elHp) elHp.textContent = hp;
+        if (elClean) elClean.textContent = clean;
       } else if (resBox) {
         resBox.style.display = 'none';
       }
