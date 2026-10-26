@@ -1,0 +1,46 @@
+{
+  "competition": "DICE FEST 2026",
+  "team": "opo yo",
+  "institution": "Universitas Negeri Surabaya (UNESA)",
+  "final_cv_column_wise_nrmse": 0.25685,
+  "public_leaderboard_nrmse": 0.25457,
+  "official_sigmas": {
+    "target_macro_gas_kwh": 151750.04,
+    "target_macro_elec_kwh": 41725.37,
+    "target_eui_gas_kwh_per_sqm": 40.65,
+    "target_clean_building_ratio": 12.49,
+    "target_electric_heating_adoption": 7.18
+  },
+  "targets_breakdown": {
+    "target_macro_gas_kwh": {
+      "rmse": 38069.35,
+      "sigma": 151750.04,
+      "nrmse": 0.25087,
+      "error_pct": 19.53
+    },
+    "target_macro_elec_kwh": {
+      "rmse": 13325.84,
+      "sigma": 41725.37,
+      "nrmse": 0.31937,
+      "error_pct": 24.87
+    },
+    "target_eui_gas_kwh_per_sqm": {
+      "rmse": 26.85,
+      "sigma": 40.65,
+      "nrmse": 0.66051,
+      "error_pct": 51.43
+    },
+    "target_clean_building_ratio": {
+      "rmse": 0.0005,
+      "sigma": 12.49,
+      "nrmse": 4e-05,
+      "error_pct": 0.0
+    },
+    "target_electric_heating_adoption": {
+      "rmse": 0.38,
+      "sigma": 7.18,
+      "nrmse": 0.05345,
+      "error_pct": 4.16
+    }
+  }
+}

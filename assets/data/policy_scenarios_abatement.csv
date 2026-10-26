@@ -1,0 +1,5 @@
+scenario,gas_savings_mwh,electricity_shift_mwh,net_energy_savings_mwh,avoided_co2_ton
+Baseline Eksisting,0.0,0.0,0.0,0.0
+Skenario 1: Heat Pump (+20%),760713.8,266249.8,494464.0,152142.8
+Skenario 2: Retrofit Pra-1919,141909.4,0.0,141909.4,28381.9
+Skenario 3: Transisi Terpadu,902623.2,266249.8,636373.4,180524.7

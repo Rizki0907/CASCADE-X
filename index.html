@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CASCADE-X | National Urban Energy Transition Intelligence Platform</title>
+  <link rel="icon" type="image/png" href="assets/logo/cascadex_logo_dark.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js"></script>
+</head>
+<body>
+
+<canvas id="cyber-canvas"></canvas>
+<div class="bg-ambient-glow"></div>
+
+<!-- BOOT SCREEN -->
+<div id="boot-screen">
+  <div class="boot-box">
+    <div class="boot-scanline"></div>
+    <div class="boot-header">
+      <div class="boot-title">
+        <img src="assets/logo/cascadex_logo_dark.png" alt="CASCADE-X Emblem" class="boot-logo-icon">
+        CASCADE-X OS // ENERGY MATRIX
+      </div>
+      <div class="boot-status">INITIALIZING</div>
+    </div>
+    <div class="boot-terminal" id="boot-log"></div>
+    <div class="boot-prog-wrapper">
+      <div class="boot-prog-bar">
+        <div class="boot-prog-fill" id="boot-fill"></div>
+      </div>
+      <div class="boot-prog-info">
+        <span>PHYSICS-INFORMED MULTI-TARGET REGRESSION</span>
+        <span id="boot-pct">0%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP NAVBAR -->
+<header class="top-navbar">
+  <div class="nav-container">
+    <div class="brand-block" onclick="nav('overview')">
+      <img id="main-brand-logo" src="assets/logo/cascadex_logo_dark.png" alt="CASCADE-X Logo" class="brand-logo-img">
+    </div>
+
+    <nav class="nav-links-center">
+      <button class="nav-tab-btn active" data-page="overview" onclick="nav('overview', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Overview</span>
+      </button>
+      <button class="nav-tab-btn" data-page="eda" onclick="nav('eda', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <span>Eksplorasi Data</span>
+      </button>
+      <button class="nav-tab-btn" data-page="modeling" onclick="nav('modeling', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        <span>Arsitektur Model</span>
+      </button>
+      <button class="nav-tab-btn" data-page="policy" onclick="nav('policy', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        <span>XAI & Kebijakan</span>
+      </button>
+      <button class="nav-tab-btn" data-page="simulator" onclick="nav('simulator', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>Simulasi Interaktif</span>
+      </button>
+    </nav>
+
+    <div class="nav-right-actions">
+      <div class="status-indicator-pill">
+        <span>RANK #1 NASIONAL // CV 0.26331</span>
+      </div>
+
+      <button class="cta-top-btn" onclick="nav('simulator')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <span>Uji Simulasi</span>
+      </button>
+
+      <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Ganti Tema">
+        <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Buka Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-drawer" id="mobile-drawer">
+    <button class="nav-tab-btn active mobile-drawer-btn" data-page="overview" onclick="nav('overview', this)">Overview</button>
+    <button class="nav-tab-btn mobile-drawer-btn" data-page="eda" onclick="nav('eda', this)">Eksplorasi Data</button>
+    <button class="nav-tab-btn mobile-drawer-btn" data-page="modeling" onclick="nav('modeling', this)">Arsitektur Model</button>
+    <button class="nav-tab-btn mobile-drawer-btn" data-page="policy" onclick="nav('policy', this)">XAI & Kebijakan</button>
+    <button class="nav-tab-btn mobile-drawer-btn" data-page="simulator" onclick="nav('simulator', this)">Simulasi Interaktif</button>
+  </div>
+</header>
+
+<!-- REAL-TIME TICKER STRIP -->
+<div class="ticker-strip">
+  <div class="ticker-badge">LATEST METRICS</div>
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>CV Score:</strong> 0.26331 (Rank #1 Nasional)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Public LB:</strong> 0.25971 (Sub-0.260 Breakthrough)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Fisika Eksak EUI:</strong> 100.000% Konsistensi Termodinamika (Deviasi 0.0)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Clean Ratio Residual:</strong> &lt;0.015 NRMSE</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Heat Pump Subzone Accuracy:</strong> 0.05994 NRMSE (91.86% Exact Match)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Dataset Spasial:</strong> 429,303 Gedung across 329 Klaster Wilayah</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Arsitektur:</strong> 3-Stage Cascaded Stacking + Decile SLSQP Coupling</div>
+
+    <!-- Duplicate for infinite loop -->
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>CV Score:</strong> 0.26331 (Rank #1 Nasional)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Public LB:</strong> 0.25971 (Sub-0.260 Breakthrough)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Fisika Eksak EUI:</strong> 100.000% Konsistensi Termodinamika (Deviasi 0.0)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Clean Ratio Residual:</strong> &lt;0.015 NRMSE</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Heat Pump Subzone Accuracy:</strong> 0.05994 NRMSE (91.86% Exact Match)</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Dataset Spasial:</strong> 429,303 Gedung across 329 Klaster Wilayah</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> <strong>Arsitektur:</strong> 3-Stage Cascaded Stacking + Decile SLSQP Coupling</div>
+  </div>
+</div>
+
+<main class="app-main-content">
+
+  <!-- ==================== PAGE 1: OVERVIEW ==================== -->
+  <section id="page-overview" class="page active">
+    <div class="hero-frame-card">
+      <div class="hero-layout">
+        <div>
+          <div class="hero-subhead-pill">CASCADE-X PROTOCOL // MULTI-TARGET PHYSICS REGRESSION</div>
+          <h1 class="hero-title">
+            Transisi Energi Cerdas.<br>
+            <span class="hero-title-highlight">Akurasi Fisika Tinggi.</span><br>
+            Solusi Kebijakan Presisi.
+          </h1>
+          <p class="hero-desc">
+            Platform intelijen transisi energi perkotaan nasional berbasis <em>Multi-Target Physics-Informed Gradient Boosting Machine Learning Framework</em> dengan <em>Spatial Relative Conditioning</em> dan <em>Cascaded Macro-Micro Energy Coupling</em> guna memecahkan The Urban Energy Transition Trilemma secara taat hukum termodinamika.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="nav('simulator')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Uji Simulasi Interaktif</span>
+            </button>
+            <button class="btn-secondary" onclick="nav('eda')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              <span>Eksplorasi Determinisme Fisika</span>
+            </button>
+          </div>
+
+          <div class="stat-metric-row">
+            <div class="stat-item">
+              <div class="stat-val">0.26331</div>
+              <div class="stat-lbl">REKOR NASIONAL CV</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">0.25971</div>
+              <div class="stat-lbl">PUBLIC LEADERBOARD</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">100.0%</div>
+              <div class="stat-lbl">KONSISTENSI FISIKA EUI</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">429,303</div>
+              <div class="stat-lbl">SAMPEL SPASIAL LATIH</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-interactive-canvas-box">
+          <canvas id="energy-mesh-canvas"></canvas>
+          <div class="canvas-tag top-right">ISOMETRIC CITY GRID // LIVE MESH</div>
+          <div class="canvas-tag bottom-left">PHYSICS COUPLING: ACTIVE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLIANCE STRIP -->
+    <div class="compliance-strip">
+      <div class="compliance-label">STANDAR KONSISTENSI & KEPATUHAN RISET:</div>
+      <div class="compliance-badges">
+        <div class="compliance-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg> Net Zero Emission 2060</div>
+        <div class="compliance-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg> SNI Konservasi Energi 6389</div>
+        <div class="compliance-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg> PLN Grid Load Reliability</div>
+        <div class="compliance-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg> PGN Gas Infrastructure</div>
+        <div class="compliance-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg> Stratified Spatial GroupKFold</div>
+      </div>
+    </div>
+
+    <!-- 5 TARGET CARDS -->
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">5 Target Prediksi Simultan Transisi Energi</h2>
+    </div>
+
+    <div class="cards-grid-5">
+      <div class="tech-card">
+        <div class="target-badge" style="color:var(--c-amber);border-color:rgba(255,159,67,0.3)">GAS MAKRO</div>
+        <div class="target-card-val">230,372 <span style="font-size:12px;color:var(--txt3)">kWh</span></div>
+        <div class="target-card-sub">CV NRMSE: <strong>0.25454</strong> (Bobot 20%)</div>
+        <div class="target-progress-bg"><div class="target-progress-fill" style="width:75%;background:var(--c-amber)"></div></div>
+      </div>
+
+      <div class="tech-card">
+        <div class="target-badge" style="color:var(--c-cyan);border-color:rgba(0,210,255,0.3)">LISTRIK MAKRO</div>
+        <div class="target-card-val">63,756 <span style="font-size:12px;color:var(--txt3)">kWh</span></div>
+        <div class="target-card-sub">CV NRMSE: <strong>0.32198</strong> (Bobot 20%)</div>
+        <div class="target-progress-bg"><div class="target-progress-fill" style="width:68%;background:var(--c-cyan)"></div></div>
+      </div>
+
+      <div class="tech-card">
+        <div class="target-badge" style="color:var(--c-blue);border-color:rgba(14,165,233,0.3)">EUI GAS</div>
+        <div class="target-card-val">139.06 <span style="font-size:12px;color:var(--txt3)">kWh/m²</span></div>
+        <div class="target-card-sub">CV NRMSE: <strong>0.66685</strong> (Bobot 20%)</div>
+        <div class="target-progress-bg"><div class="target-progress-fill" style="width:40%;background:var(--c-blue)"></div></div>
+      </div>
+
+      <div class="tech-card">
+        <div class="target-badge" style="color:var(--c-mint);border-color:rgba(0,245,160,0.3)">GEDUNG HIJAU</div>
+        <div class="target-card-val">90.76 <span style="font-size:12px;color:var(--txt3)">%</span></div>
+        <div class="target-card-sub">CV NRMSE: <strong>0.01323</strong> (Bobot 20%)</div>
+        <div class="target-progress-bg"><div class="target-progress-fill" style="width:98%;background:var(--c-mint)"></div></div>
+      </div>
+
+      <div class="tech-card">
+        <div class="target-badge" style="color:#10b981;border-color:rgba(16,185,129,0.3)">HEAT PUMP</div>
+        <div class="target-card-val">5.38 <span style="font-size:12px;color:var(--txt3)">%</span></div>
+        <div class="target-card-sub">CV NRMSE: <strong>0.05994</strong> (Bobot 20%)</div>
+        <div class="target-progress-bg"><div class="target-progress-fill" style="width:94%;background:#10b981"></div></div>
+      </div>
+    </div>
+
+    <!-- THE TRILEMMA TRIAD -->
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Pilar Trilema Transisi Energi Perkotaan (The Urban Trilemma)</h2>
+    </div>
+
+    <div class="cards-grid-3">
+      <div class="tech-card">
+        <h3 style="font-size:16px;margin-bottom:10px;color:var(--c-amber)">1. Penurunan Gas Fosil & Infrastruktur Pipa</h3>
+        <p style="color:var(--txt2);font-size:13px;line-height:1.6">
+          Penetapan target <em>Net Zero</em> memaksa utilitas gas (PGN) memprediksi penurunan volume pasokan pipa tanpa mengalami depresiasi aset terlantar (*stranded assets*), terutama pada wilayah padat hunian era pra-1919 yang masih bergantung pada boiler gas sentral.
+        </p>
+      </div>
+
+      <div class="tech-card">
+        <h3 style="font-size:16px;margin-bottom:10px;color:var(--c-cyan)">2. Lonjakan Beban Jaringan Listrik PLN</h3>
+        <p style="color:var(--txt2);font-size:13px;line-height:1.6">
+          Substitusi pemanas gas ke pompa kalor elektrik (*Heat Pump*) secara masif memicu kenaikan beban puncak listrik hingga 3.2x pada malam hari musim dingin ekstrem (HDD puncak), memerlukan pemetaan daya dukung trafo gardu induk secara granular.
+        </p>
+      </div>
+
+      <div class="tech-card">
+        <h3 style="font-size:16px;margin-bottom:10px;color:var(--c-mint)">3. Keberlanjutan Selubung Bangunan</h3>
+        <p style="color:var(--txt2);font-size:13px;line-height:1.6">
+          Memastikan intensitas konsumsi per meter persegi lantai (EUI $kWh/m^2$) turun secara terukur melalui insulasi dinding dan peredam kaca ganda, sehingga rasio sertifikasi bangunan hijau dapat ditingkatkan secara inklusif tanpa membebani daya beli masyarakat.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 2: EKSPLORASI DATA ==================== -->
+  <section id="page-eda" class="page">
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Laboratorium Determinisme Fisika & Eksplorasi Spasial</h2>
+    </div>
+
+    <!-- DETERMINISME FISIKA BANNER -->
+    <div class="tech-card" style="border-color:var(--c-cyan);margin-bottom:28px;background:rgba(0,210,255,0.03)">
+      <h3 style="font-size:18px;color:var(--c-cyan);margin-bottom:8px">Identitas Fisika Eksak: EUI Gas ≡ Gas Makro / bld_dim_06</h3>
+      <p style="color:var(--txt2);font-size:13px;line-height:1.6;margin-bottom:16px">
+        Melalui investigasi forensik terhadap 429,303 baris data latih resmi, tim "opo yo" menemukan bahwa Target 3 (EUI Gas) <strong>100.000% identik secara matematis</strong> dengan hasil bagi Target 1 (Gas Makro) terhadap Luas Lantai Internal Gedung (<code>bld_dim_06</code> / Gross Internal Area) dengan deviasi mutlak maksimal hanya $1.7 	imes 10^{-13}$. Model CASCADE-X mengunci identitas ini via formulasi tertutup (*closed-form coupling*), mencegah pelanggaran hukum termodinamika.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <span class="table-badge highlight" style="font-size:12px;padding:6px 12px">R² = 1.000000 (Konsistensi Mutlak)</span>
+        <span class="table-badge" style="font-size:12px;padding:6px 12px;background:rgba(0,210,255,0.1);color:var(--c-cyan)">Clean Building Ratio ≈ 100 - socio_demog_011 (99.64% Eksak)</span>
+        <span class="table-badge" style="font-size:12px;padding:6px 12px;background:rgba(255,159,67,0.1);color:var(--c-amber)">Korelasi Gas Makro vs Listrik Makro: +0.887</span>
+      </div>
+    </div>
+
+    <!-- VISUALISASI GRID -->
+    <div class="cards-grid-2">
+      <div class="viz-display-box">
+        <div class="viz-header">
+          <div class="viz-title">Determinisme Fisika EUI vs Rasio Area</div>
+        </div>
+        <div class="viz-body">
+          <img src="assets/visualizations/eda_physical_determinism.png" alt="Determinisme Fisika EUI">
+        </div>
+      </div>
+
+      <div class="viz-display-box">
+        <div class="viz-header">
+          <div class="viz-title">Matriks Korelasi Lintas 5 Target Energi</div>
+        </div>
+        <div class="viz-body">
+          <img src="assets/visualizations/eda_cross_target_correlations.png" alt="Korelasi Lintas Target">
+        </div>
+      </div>
+    </div>
+
+    <!-- SPATIAL ZONE EXPLORER -->
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Eksplorasi Heterogenitas Spasial (329 Klaster Wilayah Metropolitan)</h2>
+    </div>
+
+    <div class="tech-card" style="margin-bottom:32px">
+      <div style="margin-bottom:18px">
+        <label for="zone-region-select" style="font-family:var(--font-hud);font-size:12px;color:var(--c-cyan);display:block;margin-bottom:8px">
+          PILIH ZONA METROPOLITAN UNTUK MEMBEDAH PROFIL KONSUMSI:
+        </label>
+        <select id="zone-region-select" class="sim-select"></select>
+      </div>
+
+      <div id="zone-region-details" class="cards-grid-3" style="display:none;margin-top:20px;border-top:1px solid var(--bord);padding-top:20px">
+        <div class="stat-item"><div id="zone-det-buildings" class="stat-val">-</div><div class="stat-lbl">TOTAL GEDUNG ANALISIS</div></div>
+        <div class="stat-item"><div id="zone-det-gas" class="stat-val">-</div><div class="stat-lbl">RATA-RATA GAS MAKRO</div></div>
+        <div class="stat-item"><div id="zone-det-elec" class="stat-val">-</div><div class="stat-lbl">RATA-RATA BEBAN LISTRIK</div></div>
+        <div class="stat-item"><div id="zone-det-eui" class="stat-val">-</div><div class="stat-lbl">INTENSITAS EUI RATA-RATA</div></div>
+        <div class="stat-item"><div id="zone-det-hp" class="stat-val">-</div><div class="stat-lbl">ADOPSI HEAT PUMP</div></div>
+        <div class="stat-item"><div id="zone-det-clean" class="stat-val">-</div><div class="stat-lbl">GEDUNG HIJAU RATIO</div></div>
+      </div>
+    </div>
+
+    <div class="cards-grid-2">
+      <div class="viz-display-box">
+        <div class="viz-header">
+          <div class="viz-title">Efisiensi Energi Berdasarkan Era Konstruksi</div>
+        </div>
+        <div class="viz-body">
+          <img src="assets/visualizations/eda_era_vintage_efficiency.png" alt="Era Vintage Efficiency">
+        </div>
+      </div>
+
+      <div class="viz-display-box">
+        <div class="viz-header">
+          <div class="viz-title">Bauran Sistem Pemanas (HVAC Fuel Mix)</div>
+        </div>
+        <div class="viz-body">
+          <img src="assets/visualizations/eda_hvac_fuel_mix.png" alt="HVAC Fuel Mix">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 3: ARSITEKTUR MODEL ==================== -->
+  <section id="page-modeling" class="page">
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Arsitektur 3-Stage Cascaded Stacking & Benchmarking</h2>
+    </div>
+
+    <!-- 3-STAGE PIPELINE CARDS -->
+    <div class="cards-grid-3" style="margin-bottom:32px">
+      <div class="tech-card" style="border-top:3px solid var(--c-mint)">
+        <div class="target-badge" style="color:var(--c-mint)">STAGE 1</div>
+        <h3 style="font-size:16px;margin-bottom:8px">Pure HVAC & Clean Base</h3>
+        <p style="color:var(--txt2);font-size:13px;line-height:1.6">
+          Memetakan 91.86% data uji secara deterministik ke rata-rata subzone data latih (Heat Pump NRMSE 0.05994) dan melatih residual LightGBM L2 untuk Clean Building Ratio (NRMSE 0.01323).
+        </p>
+      </div>
+
+      <div class="tech-card" style="border-top:3px solid var(--c-cyan)">
+        <div class="target-badge" style="color:var(--c-cyan)">STAGE 2</div>
+        <h3 style="font-size:16px;margin-bottom:8px">Dual-Scale Cascaded Electricity</h3>
+        <p style="color:var(--txt2);font-size:13px;line-height:1.6">
+          Mendekomposisi beban listrik ke skala area dan unit hunian (*dwelling*), serta menginjeksi beban substitusi pemanas dari Stage 1 untuk menangkap korelasi kuat +0.887 secara alami.
+        </p>
+      </div>
+
+      <div class="tech-card" style="border-top:3px solid var(--c-amber)">
+        <div class="target-badge" style="color:var(--c-amber)">STAGE 3</div>
+        <h3 style="font-size:16px;margin-bottom:8px">Decile-Adaptive SLSQP Coupling</h3>
+        <p style="color:var(--txt2);font-size:13px;line-height:1.6">
+          Menyelesaikan formulasi kuadratik konveks per desil luas lantai internal guna mengunci EUI Gas dan Gas Makro agar bebas deviasi dan memotong error EUI Gas secara optimal.
+        </p>
+      </div>
+    </div>
+
+    <!-- BENCHMARK TABLE -->
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Tabel Riwayat Evolusi & Rekor Benchmark Model Tim "opo yo"</h2>
+    </div>
+
+    <div class="data-table-container" style="margin-bottom:36px">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Eksperimen</th>
+            <th>Arsitektur Model</th>
+            <th>CV NRMSE</th>
+            <th>Public LB</th>
+            <th>Tanggal</th>
+            <th>Catatan Teknis & Terobosan</th>
+          </tr>
+        </thead>
+        <tbody id="benchmark-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- DIAGNOSTIK SKALA -->
+    <div class="viz-display-box">
+      <div class="viz-header">
+        <div class="viz-title">Diagnostik Ketahanan Skala Fisis Bangunan (Scale-Invariance Audit)</div>
+      </div>
+      <div class="viz-body">
+        <img src="assets/visualizations/diagnostics_scale_invariance.png" alt="Diagnostik Skala Invariance">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 4: XAI & KEBIJAKAN ==================== -->
+  <section id="page-policy" class="page">
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Interpretabilitas Model (XAI) & Solusi Kebijakan Publik</h2>
+    </div>
+
+    <div class="cards-grid-2">
+      <div class="viz-display-box">
+        <div class="viz-header">
+          <div class="viz-title">Tingkat Kepentingan Fitur Global Lintas Sektor</div>
+        </div>
+        <div class="viz-body">
+          <img src="assets/visualizations/xai_multi_sector_feature_importance.png" alt="Feature Importance Global">
+        </div>
+      </div>
+
+      <div class="viz-display-box">
+        <div class="viz-header">
+          <div class="viz-title">TreeSHAP Marginal Attribution (Faktor Penentu Elektrifikasi)</div>
+        </div>
+        <div class="viz-body">
+          <img src="assets/visualizations/xai_treeshap_summary_plot.png" alt="TreeSHAP Attribution">
+        </div>
+      </div>
+    </div>
+
+    <!-- MACC CURVE & TABLE -->
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Kurva Biaya Dekarbonisasi Marginal (Marginal Abatement Cost Curve - MACC)</h2>
+    </div>
+
+    <div class="viz-display-box" style="margin-bottom:28px">
+      <div class="viz-header">
+        <div class="viz-title">MACC Curve Intervensi Dekarbonisasi Perkotaan</div>
+      </div>
+      <div class="viz-body">
+        <img src="assets/visualizations/policy_macc_curve.png" alt="MACC Curve">
+      </div>
+    </div>
+
+    <div class="data-table-container" style="margin-bottom:36px">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Intervensi Kebijakan</th>
+            <th>Sektor</th>
+            <th>Biaya Abatement ($/tCO₂)</th>
+            <th>Potensi Reduksi Emisi</th>
+            <th>Payback Period</th>
+            <th>Kelayakan Fiskal</th>
+          </tr>
+        </thead>
+        <tbody id="macc-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- ROADMAP 10 TAHUN -->
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Roadmap Implementasi Kebijakan Transisi Energi Nasional (2026–2035)</h2>
+    </div>
+
+    <div class="cards-grid-3">
+      <div class="tech-card" style="border-left:4px solid var(--c-cyan)">
+        <div class="target-badge">FASE 1 (2026-2028)</div>
+        <h3 style="font-size:15px;margin-bottom:8px">Standarisasi & Audit Termal</h3>
+        <p style="color:var(--txt2);font-size:12px;line-height:1.6">
+          Implementasi mandatori sertifikasi batas intensitas EUI gedung komersial, audit rugi termal pada dinding bata pejal pra-1919, serta insentif pajak untuk adopsi smart thermostat.
+        </p>
+      </div>
+
+      <div class="tech-card" style="border-left:4px solid var(--c-mint)">
+        <div class="target-badge" style="color:var(--c-mint)">FASE 2 (2029-2032)</div>
+        <h3 style="font-size:15px;margin-bottom:8px">Elektrifikasi Terpandu Heat Pump</h3>
+        <p style="color:var(--txt2);font-size:12px;line-height:1.6">
+          Penggelontoran subsidi bertingkat untuk konversi boiler gas ke Heat Pump, disertai penguatan trafo gardu PLN pada zona urban densitas tinggi guna mengantisipasi beban puncak.
+        </p>
+      </div>
+
+      <div class="tech-card" style="border-left:4px solid var(--c-amber)">
+        <div class="target-badge" style="color:var(--c-amber)">FASE 3 (2033-2035)</div>
+        <h3 style="font-size:15px;margin-bottom:8px">Integrasi Microgrid & Net Zero</h3>
+        <p style="color:var(--txt2);font-size:12px;line-height:1.6">
+          Pemanfaatan jaringan pemanas komunal (*District Heating*) berbasis limbah panas industri, penutupan terencana jalur pipa gas kota tua, dan operasionalisasi microgrid pintar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 5: SIMULATOR ==================== -->
+  <section id="page-simulator" class="page">
+    <div class="section-title-wrap">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Simulator Kebijakan & Prediksi Interaktif (The What-If Policy Engine)</h2>
+    </div>
+
+    <div class="sim-container">
+      <!-- INPUT CONTROLS -->
+      <div class="sim-controls-panel">
+        <h3 style="font-family:var(--font-hud);font-size:16px;color:var(--c-cyan);margin-bottom:20px;letter-spacing:1px">
+          PARAMETER SPESIFIKASI GEDUNG & IKLIM:
+        </h3>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Luas Lantai Internal (GIA / bld_dim_06):</span>
+            <span id="sim-gia-val" class="form-label-val">140 m²</span>
+          </div>
+          <input type="range" id="sim-gia" class="sim-range-slider" min="30" max="1000" step="5" value="140">
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Tinggi Fisik Bangunan:</span>
+            <span id="sim-height-val" class="form-label-val">7.5 m</span>
+          </div>
+          <input type="range" id="sim-height" class="sim-range-slider" min="3" max="50" step="0.5" value="7.5">
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Jumlah Lantai (Storeys):</span>
+            <span id="sim-storeys-val" class="form-label-val">2 Lantai</span>
+          </div>
+          <input type="range" id="sim-storeys" class="sim-range-slider" min="1" max="15" step="1" value="2">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"><span>Era Konstruksi Bangunan:</span></label>
+          <select id="sim-era" class="sim-select">
+            <option value="pre1919">Era Pra-1919 (Dinding Bata Pejal, Kebocoran Termal Tertinggi)</option>
+            <option value="interwar" selected>Era Antar-Perang (1919-1944, Dinding Rongga Awal)</option>
+            <option value="postwar">Era Pasca-Perang (1945-1979, Material Prefabrikasi)</option>
+            <option value="contemporary">Era Kontemporer (&gt;1999, Kaca Ganda & Standar Efisiensi Tinggi)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"><span>Bauran Sistem Pemanas (HVAC):</span></label>
+          <select id="sim-hvac" class="sim-select">
+            <option value="gas_grid" selected>Pemanas Sentral Pipa Gas Utama (Gas Mains Grid)</option>
+            <option value="heatpump">Pemanas Listrik Sentral / Heat Pump Mandiri</option>
+            <option value="hybrid">Bauran Hibrida (50% Gas Mains + 50% Heat Pump)</option>
+            <option value="district">Jaringan Pemanas Distrik Komunal (District Heating)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Keparahan Musim Dingin (HDD Tahunan):</span>
+            <span id="sim-hdd-val" class="form-label-val">2.650 HDD</span>
+          </div>
+          <input type="range" id="sim-hdd" class="sim-range-slider" min="1500" max="4200" step="50" value="2650">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"><span>Karakteristik Lingkungan Spasial:</span></label>
+          <select id="sim-env" class="sim-select">
+            <option value="urban" selected>Urban / Perkotaan Metropolitan</option>
+            <option value="rural">Rural / Pedesaan</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Tingkat Kepemilikan Hunian:</span>
+            <span id="sim-ownership-val" class="form-label-val">68%</span>
+          </div>
+          <input type="range" id="sim-ownership" class="sim-range-slider" min="10" max="100" step="1" value="68">
+        </div>
+
+        <button class="btn-primary" style="width:100%;justify-content:center;margin-top:10px" onclick="runEnergySimulation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>Hitung Proyeksi Transisi Energi Simultan</span>
+        </button>
+      </div>
+
+      <!-- SIMULATION OUTPUTS -->
+      <div class="sim-output-panel">
+        <div class="tech-card" style="border-color:var(--c-cyan)">
+          <div style="font-family:var(--font-hud);font-size:14px;color:var(--c-cyan);margin-bottom:16px;letter-spacing:1px">
+            HASIL PROYEKSI 5 TARGET SIMULTAN (CASCADE-X INFERENCE):
+          </div>
+
+          <div class="cards-grid-2" style="margin-bottom:0">
+            <div class="stat-item" style="border-left-color:var(--c-amber)">
+              <div id="res-gas-macro" class="stat-val" style="color:var(--c-amber)">-</div>
+              <div class="stat-lbl">TOTAL KONSUMSI GAS MAKRO</div>
+            </div>
+
+            <div class="stat-item" style="border-left-color:var(--c-cyan)">
+              <div id="res-elec-macro" class="stat-val" style="color:var(--c-cyan)">-</div>
+              <div class="stat-lbl">PROYEKSI BEBAN LISTRIK MAKRO</div>
+            </div>
+
+            <div class="stat-item" style="border-left-color:var(--c-blue)">
+              <div id="res-eui-gas" class="stat-val" style="color:var(--c-blue)">-</div>
+              <div class="stat-lbl">INTENSITAS GAS PER M² (EUI)</div>
+            </div>
+
+            <div class="stat-item" style="border-left-color:var(--c-mint)">
+              <div id="res-heat-pump" class="stat-val" style="color:var(--c-mint)">-</div>
+              <div class="stat-lbl">PENETRASI HEAT PUMP</div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--bord)">
+            <div class="stat-item" style="border-left-color:#a855f7">
+              <div id="res-clean-ratio" class="stat-val" style="color:#a855f7">-</div>
+              <div class="stat-lbl">PROPORSI SERTIFIKASI BANGUNAN HIJAU</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THERMODYNAMIC VERIFICATION BOX -->
+        <div class="physics-check-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <div>
+            <div style="font-family:var(--font-hud);font-size:12px;letter-spacing:1px;color:var(--txt)">AUDIT KONSISTENSI HUKUM TERMODINAMIKA:</div>
+            <div id="physics-verify-status" style="font-family:var(--font-mono);font-size:12px;margin-top:2px">-</div>
+          </div>
+        </div>
+
+        <!-- POLICY RECOMMENDATION ALERT -->
+        <div class="tech-card" style="background:rgba(255,255,255,0.02)">
+          <div style="font-family:var(--font-hud);font-size:13px;color:var(--c-mint);margin-bottom:8px;letter-spacing:1px">
+            INTELLIGENT POLICY RECOMMENDATION:
+          </div>
+          <div id="sim-recommendation-text" style="color:var(--txt2);font-size:13px;line-height:1.6">
+            Menunggu kalkulasi spesifikasi...
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div>
+      <strong>CASCADE-X Platform v2.0</strong> &bull; Tim "opo yo" (Muhammad Habib Nur Aiman & Rizki Piji Fathoni)
+    </div>
+    <div>
+      FMIPA Universitas Negeri Surabaya &bull; DICE FEST 2026 Machine Learning Competition
+    </div>
+  </footer>
+
+</main>
+
+<script src="js/app.js"></script>
+<script src="js/simulator.js"></script>
+<script src="js/charts.js"></script>
+</body>
+</html>

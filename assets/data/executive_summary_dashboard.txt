@@ -1,0 +1,15 @@
+================================================================================
+DICE FEST 2026 - FINAL MACHINE LEARNING DASHBOARD EXPORT
+Tim opo yo | Muhammad Habib Nur Aiman & Rizki Piji Fathoni | Universitas Negeri Surabaya
+================================================================================
+Model: Multi-Target Physics-Informed Gradient Boosting Machine Learning Framework
+Cross-Validation Score (Column-Wise NRMSE): 0.25685
+Public Leaderboard Score (Column-Wise NRMSE): 0.25457
+
+Komponen Aset Dashboard:
+1. visualizations/      : Seluruh visualisasi high-res (PNG) untuk paparan slide dan laporan.
+2. interactive_dashboard/: Seluruh visualisasi Plotly interaktif berbasis web (HTML self-contained).
+3. datasets/            : Dataset terstruktur untuk masukan dashboard (CSV).
+4. models/              : Serialisasi model GBDT dan transformer data (.joblib / JSON).
+5. reports/             : Laporan evaluasi kuantitatif metrik NRMSE dan dekomposisi galat.
+================================================================================

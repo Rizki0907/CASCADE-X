@@ -1,0 +1,19 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python / Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.ipynb_checkpoints
+
+# Large raw datasets (kept local)
+*.zip
+oof_predictions_cross_validation.csv
+submission.csv
+
+# Editors
+.vscode/
+.idea/

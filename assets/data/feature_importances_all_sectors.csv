@@ -1,0 +1,15 @@
+sector,feature,split_gain
+Gas Makro,socio_demog_005,1993
+Gas Makro,feat_sub_eui_te,1848
+Gas Makro,feat_sub_eui_res_te,1612
+Gas Makro,feat_envelope_to_floor,1420
+Gas Makro,feat_dwellings_to_floor,1305
+Gas Makro,bld_dim_06,1280
+Listrik Makro,socio_demog_005,2340
+Listrik Makro,feat_dwellings_to_floor,1950
+Listrik Makro,pred_s1_gas,1780
+EUI Gas,bld_dim_06,2850
+EUI Gas,feat_envelope_to_floor,2410
+EUI Gas,feat_compactness,1890
+Heat Pump,hvac_dist_02,3120
+Heat Pump,hvac_dist_09,2450
