@@ -175,7 +175,8 @@ h3, h4, h5, .card-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+  cursor: pointer;
 }
 
 #boot-screen.hidden {
@@ -544,6 +545,27 @@ h3, h4, h5, .card-title {
   margin-bottom: 28px;
 }
 
+.hero-brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-logo-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.4));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.hero-logo-img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 24px rgba(0, 240, 255, 0.7));
+}
+
 .hero-pill-badge {
   display: inline-flex;
   align-items: center;
@@ -556,7 +578,7 @@ h3, h4, h5, .card-title {
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--brand-cyan);
-  margin-bottom: 14px;
+  margin-bottom: 0;
 }
 
 .hero-title {
@@ -1475,16 +1497,108 @@ h3, h4, h5, .card-title {
 /* ==========================================================================
    FAST SNAPPY SIMULATOR BUTTON & FLASH
    ========================================================================== */
+#btn-run-simulation {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 #btn-run-simulation:active {
   transform: scale(0.985);
 }
 
+#btn-run-simulation.btn-needs-run {
+  background: linear-gradient(135deg, #E11D48, #F59E0B) !important;
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.5) !important;
+  animation: pulseRecalc 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseRecalc {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(245, 158, 11, 0.7);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-status-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  margin-top: 8px;
+  text-align: center;
+  color: var(--text-muted);
+  display: block;
+  transition: color 0.2s ease;
+}
+
+.btn-status-hint.active {
+  color: #F59E0B;
+  font-weight: 700;
+}
+
+.btn-status-hint.success {
+  color: var(--color-safe);
+  font-weight: 700;
+}
+
+/* WHAT-IF POLICY PRESETS */
+.sim-presets-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.sim-presets-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.preset-chip-btn {
+  padding: 6px 12px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-family: var(--font-subheading);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.preset-chip-btn:hover {
+  color: var(--brand-cyan);
+  border-color: var(--border-accent);
+  background: var(--bg-surface-hover);
+  transform: translateY(-1px);
+}
+
+.preset-chip-btn.active {
+  background: rgba(0, 210, 255, 0.12);
+  color: var(--brand-cyan);
+  border-color: rgba(0, 210, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.15);
+}
+
 @keyframes metricCardFlash {
   0% { box-shadow: 0 0 0 rgba(0, 210, 255, 0); }
-  50% { box-shadow: 0 0 16px rgba(0, 210, 255, 0.35); border-color: var(--brand-cyan); }
+  50% { box-shadow: 0 0 18px rgba(0, 210, 255, 0.4); border-color: var(--brand-cyan); }
   100% { box-shadow: 0 0 0 rgba(0, 210, 255, 0); }
 }
 
 .card-flash-update {
   animation: metricCardFlash 0.35s ease-out;
 }
+

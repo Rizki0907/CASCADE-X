@@ -2,6 +2,20 @@
 (function () {
   'use strict';
 
+  function markSimulationStale() {
+    const btn = document.getElementById('btn-run-simulation');
+    const hint = document.getElementById('btn-status-hint');
+    if (btn) {
+      btn.classList.add('btn-needs-run');
+    }
+    if (hint) {
+      hint.textContent = '• Parameter Diperbarui — Klik Tombol untuk Menghitung Proyeksi!';
+      hint.className = 'btn-status-hint active';
+    }
+    // Remove active state from preset chips when custom inputs are tweaked
+    document.querySelectorAll('.preset-chip-btn').forEach((b) => b.classList.remove('active'));
+  }
+
   function bindInteractiveControls() {
     const sliders = [
       { id: 'sim-gia', labelId: 'sim-gia-val', suffix: ' m²' },
@@ -17,7 +31,7 @@
       if (slider && label) {
         slider.addEventListener('input', () => {
           label.textContent = Number(slider.value).toLocaleString('id-ID') + suffix;
-          window.runEnergySimulation();
+          markSimulationStale();
         });
       }
     });
@@ -27,7 +41,7 @@
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('change', () => {
-          window.runEnergySimulation();
+          markSimulationStale();
         });
       }
     });
@@ -35,11 +49,79 @@
     const btn = document.getElementById('btn-run-simulation');
     if (btn) {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.runEnergySimulation(true);
+        if (e) e.preventDefault();
+
+        // Visual responsive computing state
+        btn.disabled = true;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16" style="animation:spin 0.8s linear infinite;"><circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"></circle></svg> <span>Menjalankan Inferensi Multi-Target CASCADE-X...</span>`;
+
+        setTimeout(() => {
+          window.runEnergySimulation(true);
+          btn.disabled = false;
+          btn.classList.remove('btn-needs-run');
+          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg> <span>Hitung Proyeksi Transisi Energi Simultan</span>`;
+          const hint = document.getElementById('btn-status-hint');
+          if (hint) {
+            hint.textContent = '✓ Proyeksi Terkini Telah Dihitung Sesuai Parameter Bangunan';
+            hint.className = 'btn-status-hint success';
+          }
+        }, 150);
       });
     }
   }
+
+  window.applySimPreset = function (presetKey) {
+    const presets = {
+      kota_tua: {
+        gia: 210, height: 9.0, storeys: 3, era: 'pre1919', hvac: 'gas_grid', hdd: 3100, env: 'urban', ownership: 62
+      },
+      heatpump_aggresive: {
+        gia: 120, height: 7.0, storeys: 2, era: 'contemporary', hvac: 'heatpump', hdd: 2450, env: 'urban', ownership: 85
+      },
+      retrofit_hybrid: {
+        gia: 160, height: 8.0, storeys: 2, era: 'interwar', hvac: 'hybrid', hdd: 2650, env: 'urban', ownership: 74
+      },
+      suburban_baseline: {
+        gia: 140, height: 7.5, storeys: 2, era: 'postwar', hvac: 'gas_grid', hdd: 2600, env: 'rural', ownership: 68
+      }
+    };
+
+    const p = presets[presetKey];
+    if (!p) return;
+
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    };
+    setVal('sim-gia', p.gia);
+    setVal('sim-height', p.height);
+    setVal('sim-storeys', p.storeys);
+    setVal('sim-era', p.era);
+    setVal('sim-hvac', p.hvac);
+    setVal('sim-hdd', p.hdd);
+    setVal('sim-env', p.env);
+    setVal('sim-ownership', p.ownership);
+
+    const giaVal = document.getElementById('sim-gia-val');
+    if (giaVal) giaVal.textContent = p.gia.toLocaleString('id-ID') + ' m²';
+    const hVal = document.getElementById('sim-height-val');
+    if (hVal) hVal.textContent = p.height + ' m';
+    const sVal = document.getElementById('sim-storeys-val');
+    if (sVal) sVal.textContent = p.storeys + ' Lantai';
+    const hddVal = document.getElementById('sim-hdd-val');
+    if (hddVal) hddVal.textContent = p.hdd.toLocaleString('id-ID') + ' HDD';
+    const ownVal = document.getElementById('sim-ownership-val');
+    if (ownVal) ownVal.textContent = p.ownership + '%';
+
+    document.querySelectorAll('.preset-chip-btn').forEach((b) => {
+      b.classList.toggle('active', b.getAttribute('data-preset') === presetKey);
+    });
+
+    const btn = document.getElementById('btn-run-simulation');
+    if (btn) {
+      btn.click();
+    }
+  };
 
   window.runEnergySimulation = function (isButtonClick = false) {
     const gia = parseFloat(document.getElementById('sim-gia')?.value || 140);
@@ -100,10 +182,10 @@
     let baseElec = 3800 + (gia * 16.5) + (storeys * 450);
     if (environment === 'urban') baseElec += 1200;
 
-    // Heat pump substitution surge load
+    // Heat pump substitution surge load on power grid
     if (hvac === 'heatpump') {
       const displacedThermalKwh = (148.0 - predEui) * gia;
-      const cop = 3.2; // Coefficient of Performance
+      const cop = 3.2; // Coefficient of Performance (pompa kalor)
       const addedElecLoad = displacedThermalKwh / cop;
       baseElec += addedElecLoad;
     } else if (hvac === 'hybrid') {
@@ -113,7 +195,7 @@
 
     let predElecMacro = Math.max(2968, baseElec);
 
-    // Instant flash animation on cards if triggered by button click
+    // Instant flash animation on cards
     if (isButtonClick) {
       document.querySelectorAll('#res-gas-macro, #res-elec-macro, #res-eui-gas, #res-clean-ratio, #res-heat-pump').forEach((el) => {
         const card = el.closest('.metric-card');
@@ -125,7 +207,7 @@
       });
     }
 
-    // Render results into UI synchronously (0ms latency)
+    // Render results into UI
     renderSimulationOutputs({
       gasMacro: predGasMacro,
       elecMacro: predElecMacro,
@@ -167,7 +249,7 @@
     const recText = document.getElementById('sim-recommendation-text');
     if (recText) {
       if (res.hvac === 'heatpump' && res.era === 'pre1919') {
-        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Adopsi Heat Pump pada era pra-1919 berisiko kebocoran termal tinggi karena dinding pejal tanpa rongga insulasi. <em>Wajib intervensi insulasi selubung dinding terlebih dahulu</em> guna menghindari lonjakan beban listrik puncak trafo lokal PLN.`;
+        recText.innerHTML = `<strong>Rekomendasi Kebijakan (Trilemma Alert):</strong> Adopsi Heat Pump pada gedung era pra-1919 berisiko kebocoran termal tinggi akibat dinding pejal tanpa rongga insulasi. <em>Wajib intervensi insulasi selubung terlebih dahulu</em> guna menghindari lonjakan beban listrik puncak trafo lokal PLN.`;
       } else if (res.hvac === 'heatpump') {
         recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Profil dekarbonisasi sangat optimal! Pengurangan emisi gas mencapai <strong>88%</strong>. Direkomendasikan insentif tarif listrik khusus <em>off-peak</em> malam hari untuk stabilisasi beban grid transmisi tenaga listrik.`;
       } else if (res.era === 'pre1919' || res.era === 'interwar') {

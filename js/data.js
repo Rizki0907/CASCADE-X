@@ -4,7 +4,7 @@ window.CASCADE_DATA = {
   metadata: {
     team: 'opo yo',
     members: ['Muhammad Habib Nur Aiman', 'Rizki Piji Fathoni'],
-    institution: 'Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA), Universitas Negeri Surabaya',
+    institution: 'Sains Data, Universitas Negeri Surabaya',
     competition: 'DICE FEST 2026 Machine Learning Competition',
     organizer: 'HMPS Sains Data, FST UIN Raden Mas Said Surakarta',
     rank: 'Peringkat #1 Nasional Babak Penyisihan',

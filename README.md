@@ -13,7 +13,7 @@
 ## 🏆 Profil Tim & Kompetisi
 * **Nama Tim:** opo yo
 * **Anggota:** Muhammad Habib Nur Aiman & Rizki Piji Fathoni
-* **Institusi:** Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA), Universitas Negeri Surabaya
+* **Institusi:** Program Studi Sains Data, Universitas Negeri Surabaya
 * **Penyelenggara:** Himpunan Mahasiswa Program Studi (HMPS) Sains Data, Fakultas Sains dan Teknologi, UIN Raden Mas Said Surakarta
 * **Tema Kompetisi:** *"Building Smart, Secure, and Sustainable Digital Ecosystems"*
 * **Capaian:** **Peringkat #1 Nasional Babak Penyisihan (Kaggle & Academic Writeup)**
