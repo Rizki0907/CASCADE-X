@@ -15,11 +15,11 @@
     if (!bootScreen) return;
 
     const logs = [
-      { text: 'Menginisialisasi CASCADE-X Core Engine v2.0...', delay: 100 },
-      { text: 'Memuat dataset spasial 429,303 sampel bangunan & 329 klaster wilayah...', delay: 300 },
-      { text: 'Mengonfirmasi hukum fisika tertutup: EUI Gas ≡ Gas Makro / GIA (Deviasi 0.0)...', delay: 550 },
-      { text: 'Memverifikasi arsitektur 3-Stage Cascaded Macro-Micro Energy Coupling...', delay: 800 },
-      { text: 'CASCADE-X CORE ONLINE // RANK #1 NASIONAL // CV: 0.25685 // LB: 0.25457', delay: 1050, highlight: true }
+      { text: 'Menginisialisasi CASCADE-X Core Engine v2.0...', delay: 50 },
+      { text: 'Memuat dataset spasial 429,303 sampel bangunan & 329 klaster wilayah...', delay: 160 },
+      { text: 'Mengonfirmasi hukum fisika tertutup: EUI Gas ≡ Gas Makro / GIA (Deviasi 0.0)...', delay: 280 },
+      { text: 'Memverifikasi arsitektur 3-Stage Cascaded Macro-Micro Energy Coupling...', delay: 400 },
+      { text: 'CASCADE-X CORE ONLINE // RANK #1 NASIONAL // CV: 0.25685 // LB: 0.25457', delay: 540, highlight: true }
     ];
 
     logs.forEach((item, index) => {
@@ -43,7 +43,7 @@
         if (index === logs.length - 1) {
           setTimeout(() => {
             bootScreen.classList.add('hidden');
-          }, 450);
+          }, 250);
         }
       }, item.delay);
     });

@@ -113,21 +113,19 @@
 
     let predElecMacro = Math.max(2968, baseElec);
 
-    // Button tactile feedback animation if clicked
+    // Instant flash animation on cards if triggered by button click
     if (isButtonClick) {
-      const btn = document.getElementById('btn-run-simulation');
-      if (btn) {
-        const originalHtml = btn.innerHTML;
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16" class="spin-icon"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg><span>Mengalkulasi Rekomendasi Terpadu...</span>`;
-        btn.style.opacity = '0.85';
-        setTimeout(() => {
-          btn.innerHTML = originalHtml;
-          btn.style.opacity = '1';
-        }, 300);
-      }
+      document.querySelectorAll('#res-gas-macro, #res-elec-macro, #res-eui-gas, #res-clean-ratio, #res-heat-pump').forEach((el) => {
+        const card = el.closest('.metric-card');
+        if (card) {
+          card.classList.remove('card-flash-update');
+          void card.offsetWidth; // trigger reflow
+          card.classList.add('card-flash-update');
+        }
+      });
     }
 
-    // Render results into UI
+    // Render results into UI synchronously (0ms latency)
     renderSimulationOutputs({
       gasMacro: predGasMacro,
       elecMacro: predElecMacro,
@@ -159,7 +157,7 @@
     const checkBadge = document.getElementById('physics-verify-status');
     if (checkBadge) {
       if (diff < 1e-4) {
-        checkBadge.innerHTML = `<span style="color:var(--color-safe);font-weight:700;">✓ TERVERIFIKASI TERMODINAMIKA LULUS 100.000% (Identitas Eksak EUI ≡ Gas/GIA)</span>`;
+        checkBadge.innerHTML = `<span style="color:var(--color-safe);font-weight:700;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" style="vertical-align:text-bottom;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>TERVERIFIKASI TERMODINAMIKA LULUS 100.000% (Identitas Eksak EUI ≡ Gas/GIA)</span>`;
       } else {
         checkBadge.innerHTML = `<span style="color:var(--color-warning);font-weight:700;">Δ Deviasi Numerik: ${diff.toFixed(4)}</span>`;
       }
