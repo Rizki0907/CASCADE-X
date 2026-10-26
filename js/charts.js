@@ -2,47 +2,39 @@
 (function () {
   'use strict';
 
-  function populateBenchmarkTable() {
-    const tbody = document.getElementById('benchmark-table-body');
-    if (!tbody || !window.CASCADE_DATA || !CASCADE_DATA.experiment_evolution) return;
-
-    tbody.innerHTML = '';
-    CASCADE_DATA.experiment_evolution.forEach((exp, idx) => {
-      const tr = document.createElement('tr');
-      const isTop = idx >= CASCADE_DATA.experiment_evolution.length - 2;
-
-      tr.innerHTML = `
-        <td style="font-weight:600;color:${isTop ? 'var(--c-mint)' : 'var(--txt)'}">
-          ${exp.id} ${isTop ? '<span class="table-badge highlight">🏆 REKOR</span>' : ''}
-        </td>
-        <td>${exp.model}</td>
-        <td style="font-family:var(--font-mono);font-weight:700;color:var(--c-cyan)">${exp.cv.toFixed(5)}</td>
-        <td style="font-family:var(--font-mono);font-weight:700;color:var(--c-mint)">${exp.lb.toFixed(5)}</td>
-        <td style="color:var(--txt3);font-size:11px">${exp.date}</td>
-        <td style="font-size:12px;color:var(--txt2)">${exp.desc}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+  function getData() {
+    return window.CASCADE_DATA || (typeof CASCADE_DATA !== 'undefined' ? CASCADE_DATA : null);
   }
 
   function populateMaccTable() {
     const tbody = document.getElementById('macc-table-body');
-    if (!tbody || !window.CASCADE_DATA || !CASCADE_DATA.macc_interventions) return;
+    const data = getData();
+    if (!tbody || !data || !data.macc_interventions) return;
 
     tbody.innerHTML = '';
-    CASCADE_DATA.macc_interventions.forEach((item) => {
+    data.macc_interventions.forEach((item) => {
       const tr = document.createElement('tr');
-      const isNegative = item.cost_per_ton_usd < 0;
+      const cost = typeof item.cost_per_ton_usd === 'number'
+        ? item.cost_per_ton_usd
+        : (typeof item.marginal_abatement_cost_eur_per_tco2 === 'number' ? item.marginal_abatement_cost_eur_per_tco2 : 0);
+      const isNegative = cost < 0;
+      const abatement = typeof item.annual_abatement_kt_co2 === 'number'
+        ? item.annual_abatement_kt_co2
+        : (typeof item.abatement_potential_kton_co2 === 'number' ? item.abatement_potential_kton_co2 : 0);
+      const name = item.intervention_name || item.intervention || 'Intervensi Dekarbonisasi';
+      const sector = item.sector || 'Efisiensi Selubung';
+      const payback = item.payback_period_years || '-';
+      const rank = item.feasibility_rank || (isNegative ? 'Prioritas #1' : 'Prioritas Bersyarat');
 
       tr.innerHTML = `
-        <td style="font-weight:600">${item.intervention_name}</td>
-        <td><span class="table-badge" style="background:rgba(0,210,255,0.1);color:var(--c-cyan)">${item.sector}</span></td>
-        <td style="font-family:var(--font-mono);color:${isNegative ? 'var(--c-mint)' : 'var(--txt)'};font-weight:600">
-          ${item.cost_per_ton_usd < 0 ? '-' : ''}$${Math.abs(item.cost_per_ton_usd).toFixed(1)} / tCO₂
+        <td style="font-weight:600;color:var(--text-primary)">${name}</td>
+        <td><span class="badge-tag" style="background:rgba(0,210,255,0.1);color:var(--brand-cyan);border:1px solid rgba(0,210,255,0.25)">${sector}</span></td>
+        <td style="font-family:'JetBrains Mono';color:${isNegative ? 'var(--color-safe)' : 'var(--text-primary)'};font-weight:700">
+          ${isNegative ? '-' : ''}$${Math.abs(cost).toFixed(1)} / tCO₂
         </td>
-        <td style="font-family:var(--font-mono);font-weight:600">${item.annual_abatement_kt_co2.toFixed(1)} kt</td>
-        <td style="font-family:var(--font-mono);color:var(--c-amber)">${item.payback_period_years} Tahun</td>
-        <td><span class="table-badge ${isNegative ? 'highlight' : ''}">${item.feasibility_rank}</span></td>
+        <td style="font-family:'JetBrains Mono';font-weight:700;color:var(--brand-cyan)">${abatement.toFixed(1)} kt</td>
+        <td style="font-family:'JetBrains Mono';color:var(--color-warning);font-weight:600">${payback} Tahun</td>
+        <td><span class="badge-tag ${isNegative ? 'tag-safe' : 'tag-champion'}">${rank}</span></td>
       `;
       tbody.appendChild(tr);
     });
@@ -50,10 +42,11 @@
 
   function populateZoneRegionSelect() {
     const sel = document.getElementById('zone-region-select');
-    if (!sel || !window.CASCADE_DATA || !CASCADE_DATA.zone_regions) return;
+    const data = getData();
+    if (!sel || !data || !data.zone_regions) return;
 
     sel.innerHTML = '<option value="">-- Pilih Wilayah Metropolitan (329 Klaster) --</option>';
-    CASCADE_DATA.zone_regions.forEach((z) => {
+    data.zone_regions.forEach((z) => {
       const opt = document.createElement('option');
       opt.value = z.zone_region_id;
       const eui = typeof z.mean_eui_gas === 'number' ? z.mean_eui_gas.toFixed(1) : '-';
@@ -62,9 +55,9 @@
       sel.appendChild(opt);
     });
 
-    sel.addEventListener('change', () => {
+    function updateDetails() {
       const val = sel.value;
-      const found = CASCADE_DATA.zone_regions.find((z) => z.zone_region_id === val);
+      const found = data.zone_regions.find((z) => z.zone_region_id === val);
       const resBox = document.getElementById('zone-region-details');
       if (found && resBox) {
         resBox.style.display = 'grid';
@@ -88,21 +81,26 @@
         if (elEui) elEui.textContent = eui;
         if (elHp) elHp.textContent = hp;
         if (elClean) elClean.textContent = clean;
-      } else if (resBox) {
-        resBox.style.display = 'none';
       }
-    });
+    }
 
-    // Default select first item
-    if (CASCADE_DATA.zone_regions.length > 0) {
-      sel.value = CASCADE_DATA.zone_regions[0].zone_region_id;
-      sel.dispatchEvent(new Event('change'));
+    sel.addEventListener('change', updateDetails);
+
+    // Default select first cluster (REG_001)
+    if (data.zone_regions.length > 0) {
+      sel.value = data.zone_regions[0].zone_region_id;
+      updateDetails();
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    populateBenchmarkTable();
+  function init() {
     populateMaccTable();
     populateZoneRegionSelect();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();

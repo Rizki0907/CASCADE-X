@@ -1,6 +1,6 @@
 // CASCADE-X National Energy Transition Intelligence Data Store
 // Source: Official Academic Writeup Paper & Logbook opo yo.xlsx
-const CASCADE_DATA = {
+window.CASCADE_DATA = {
   metadata: {
     team: 'opo yo',
     members: ['Muhammad Habib Nur Aiman', 'Rizki Piji Fathoni'],
@@ -175,31 +175,39 @@ const CASCADE_DATA = {
   }
 ],
   macc_interventions: [
-  {
-    "intervention": "Insulasi Dinding Pejal",
-    "marginal_abatement_cost_eur_per_tco2": -25.0,
-    "abatement_potential_kton_co2": 180.5,
-    "payback_period_years": 6.8
-  },
-  {
-    "intervention": "Elektrifikasi Heat Pump",
-    "marginal_abatement_cost_eur_per_tco2": 15.4,
-    "abatement_potential_kton_co2": 340.2,
-    "payback_period_years": 11.2
-  },
-  {
-    "intervention": "Kaca Ganda Efisiensi Tinggi",
-    "marginal_abatement_cost_eur_per_tco2": 45.2,
-    "abatement_potential_kton_co2": 95.0,
-    "payback_period_years": 14.5
-  },
-  {
-    "intervention": "Jaringan Distrik Hibrida",
-    "marginal_abatement_cost_eur_per_tco2": 78.0,
-    "abatement_potential_kton_co2": 140.8,
-    "payback_period_years": 22.0
-  }
-],
+    {
+      intervention_name: "Insulasi Dinding Pejal (Solid Wall Retrofit)",
+      sector: "Efisiensi Selubung",
+      cost_per_ton_usd: -25.0,
+      annual_abatement_kt_co2: 180.5,
+      payback_period_years: 6.8,
+      feasibility_rank: "Prioritas #1 (Hemat Bersih)"
+    },
+    {
+      intervention_name: "Elektrifikasi Pompa Kalor (Air-Source Heat Pump)",
+      sector: "Elektrifikasi Pemanas",
+      cost_per_ton_usd: 15.4,
+      annual_abatement_kt_co2: 340.2,
+      payback_period_years: 11.2,
+      feasibility_rank: "Prioritas #2 (Reduksi Maksimal)"
+    },
+    {
+      intervention_name: "Kaca Ganda & Insulasi Kusen Efisiensi Tinggi",
+      sector: "Elemen Pasif",
+      cost_per_ton_usd: 45.2,
+      annual_abatement_kt_co2: 95.0,
+      payback_period_years: 14.5,
+      feasibility_rank: "Prioritas #3 (Kelayakan Menengah)"
+    },
+    {
+      intervention_name: "Jaringan Distrik Hibrida (District Heating)",
+      sector: "Infrastruktur Komunal",
+      cost_per_ton_usd: 78.0,
+      annual_abatement_kt_co2: 140.8,
+      payback_period_years: 22.0,
+      feasibility_rank: "Prioritas #4 (Investasi Jangka Panjang)"
+    }
+  ],
   policy_scenarios: [
   {
     "scenario": "Baseline Eksisting",
@@ -3583,3 +3591,5 @@ const CASCADE_DATA = {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = CASCADE_DATA;
 }
+
+var CASCADE_DATA = window.CASCADE_DATA;

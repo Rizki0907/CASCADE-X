@@ -2,17 +2,46 @@
 (function () {
   'use strict';
 
-  function updateSliderLabel(sliderId, labelId, suffix = '') {
-    const slider = document.getElementById(sliderId);
-    const label = document.getElementById(labelId);
-    if (!slider || !label) return;
+  function bindInteractiveControls() {
+    const sliders = [
+      { id: 'sim-gia', labelId: 'sim-gia-val', suffix: ' m²' },
+      { id: 'sim-height', labelId: 'sim-height-val', suffix: ' m' },
+      { id: 'sim-storeys', labelId: 'sim-storeys-val', suffix: ' Lantai' },
+      { id: 'sim-hdd', labelId: 'sim-hdd-val', suffix: ' HDD' },
+      { id: 'sim-ownership', labelId: 'sim-ownership-val', suffix: '%' }
+    ];
 
-    slider.addEventListener('input', () => {
-      label.textContent = Number(slider.value).toLocaleString('id-ID') + suffix;
+    sliders.forEach(({ id, labelId, suffix }) => {
+      const slider = document.getElementById(id);
+      const label = document.getElementById(labelId);
+      if (slider && label) {
+        slider.addEventListener('input', () => {
+          label.textContent = Number(slider.value).toLocaleString('id-ID') + suffix;
+          window.runEnergySimulation();
+        });
+      }
     });
+
+    const selects = ['sim-era', 'sim-hvac', 'sim-env'];
+    selects.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('change', () => {
+          window.runEnergySimulation();
+        });
+      }
+    });
+
+    const btn = document.getElementById('btn-run-simulation');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.runEnergySimulation(true);
+      });
+    }
   }
 
-  window.runEnergySimulation = function () {
+  window.runEnergySimulation = function (isButtonClick = false) {
     const gia = parseFloat(document.getElementById('sim-gia')?.value || 140);
     const height = parseFloat(document.getElementById('sim-height')?.value || 7.5);
     const storeys = parseFloat(document.getElementById('sim-storeys')?.value || 2);
@@ -68,7 +97,6 @@
     predCleanRatio = Math.min(100.0, Math.max(8.33, predCleanRatio));
 
     // 5. Electricity Macro Load (kWh/year) - Cascaded Macro-Micro Coupling
-    // Base electricity: lighting, appliances, plug load
     let baseElec = 3800 + (gia * 16.5) + (storeys * 450);
     if (environment === 'urban') baseElec += 1200;
 
@@ -84,6 +112,20 @@
     }
 
     let predElecMacro = Math.max(2968, baseElec);
+
+    // Button tactile feedback animation if clicked
+    if (isButtonClick) {
+      const btn = document.getElementById('btn-run-simulation');
+      if (btn) {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16" class="spin-icon"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg><span>Mengalkulasi Rekomendasi Terpadu...</span>`;
+        btn.style.opacity = '0.85';
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.style.opacity = '1';
+        }, 300);
+      }
+    }
 
     // Render results into UI
     renderSimulationOutputs({
@@ -117,9 +159,9 @@
     const checkBadge = document.getElementById('physics-verify-status');
     if (checkBadge) {
       if (diff < 1e-4) {
-        checkBadge.innerHTML = `<span style="color:var(--c-mint);font-weight:600;">✓ TERVERIFIKASI TERMODINAMIKA LULUS 100.000% (Deviasi: 0.00)</span>`;
+        checkBadge.innerHTML = `<span style="color:var(--color-safe);font-weight:700;">✓ TERVERIFIKASI TERMODINAMIKA LULUS 100.000% (Identitas Eksak EUI ≡ Gas/GIA)</span>`;
       } else {
-        checkBadge.innerHTML = `<span style="color:var(--c-amber);">Δ Deviasi: ${diff.toFixed(4)}</span>`;
+        checkBadge.innerHTML = `<span style="color:var(--color-warning);font-weight:700;">Δ Deviasi Numerik: ${diff.toFixed(4)}</span>`;
       }
     }
 
@@ -127,27 +169,27 @@
     const recText = document.getElementById('sim-recommendation-text');
     if (recText) {
       if (res.hvac === 'heatpump' && res.era === 'pre1919') {
-        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Adopsi Heat Pump pada era pra-1919 berisiko kebocoran termal tinggi karena dinding pejal tanpa rongga. <em>Wajib intervensi insulasi selubung dinding terlebih dahulu</em> guna menghindari lonjakan beban listrik puncak trafo lokal.`;
+        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Adopsi Heat Pump pada era pra-1919 berisiko kebocoran termal tinggi karena dinding pejal tanpa rongga insulasi. <em>Wajib intervensi insulasi selubung dinding terlebih dahulu</em> guna menghindari lonjakan beban listrik puncak trafo lokal PLN.`;
       } else if (res.hvac === 'heatpump') {
-        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Profil dekarbonisasi sangat optimal! Pengurangan emisi gas mencapai <strong>88%</strong>. Direkomendasikan insentif tarif listrik khusus off-peak malam hari untuk stabilisasi beban grid PLN.`;
+        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Profil dekarbonisasi sangat optimal! Pengurangan emisi gas mencapai <strong>88%</strong>. Direkomendasikan insentif tarif listrik khusus <em>off-peak</em> malam hari untuk stabilisasi beban grid transmisi tenaga listrik.`;
       } else if (res.era === 'pre1919' || res.era === 'interwar') {
-        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Gedung ini berada pada kuadran inefisiensi tinggi (EUI ${res.euiGas.toFixed(1)} kWh/m²). Prioritas utama MACC: <em>Retrofit kaca ganda dan peredaman atap</em> untuk memangkas intensitas gas sebelum elektrifikasi.`;
+        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Gedung ini berada pada kuadran inefisiensi termal tinggi (EUI ${res.euiGas.toFixed(1)} kWh/m²). Prioritas utama MACC: <em>Retrofit kaca ganda dan insulasi selubung</em> untuk memangkas intensitas gas sebelum konversi ke pompa kalor.`;
       } else {
-        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Profil gedung berada dalam standar SNI Konservasi Energi. Layak dipasangkan smart thermostat dan sertifikasi bangunan hijau tingkat pratama.`;
+        recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Profil gedung berada dalam standar efisiensi energi terdepan. Layak dipasangkan smart thermostat dan sertifikasi bangunan hijau tingkat utama.`;
       }
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    updateSliderLabel('sim-gia', 'sim-gia-val', ' m²');
-    updateSliderLabel('sim-height', 'sim-height-val', ' m');
-    updateSliderLabel('sim-storeys', 'sim-storeys-val', ' Lantai');
-    updateSliderLabel('sim-hdd', 'sim-hdd-val', ' HDD');
-    updateSliderLabel('sim-ownership', 'sim-ownership-val', '%');
-
-    // Run initial baseline simulation
+  function init() {
+    bindInteractiveControls();
     if (document.getElementById('sim-gia')) {
       window.runEnergySimulation();
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
