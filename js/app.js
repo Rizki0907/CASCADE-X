@@ -359,6 +359,28 @@
     }
   };
 
+  window.openImageLightbox = function (src, title) {
+    const modal = document.getElementById('image-lightbox-modal');
+    const img = document.getElementById('lightbox-img');
+    const titleEl = document.getElementById('lightbox-title');
+    if (modal && img) {
+      img.src = src;
+      if (titleEl) titleEl.textContent = title || 'Gambar Publikasi Resolusi Tinggi';
+      modal.classList.add('active');
+    }
+  };
+
+  window.closeImageLightbox = function () {
+    const modal = document.getElementById('image-lightbox-modal');
+    if (modal) modal.classList.remove('active');
+  };
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      window.closeImageLightbox();
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('cascadex-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
