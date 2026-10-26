@@ -15,11 +15,11 @@
     if (!bootScreen) return;
 
     const logs = [
-      { text: 'Menginisialisasi CASCADE-X Core Engine v2.0...', delay: 120 },
-      { text: 'Memuat dataset spasial 429,303 sampel bangunan & 329 klaster wilayah...', delay: 350 },
-      { text: 'Mengonfirmasi hukum fisika tertutup: EUI Gas ≡ Gas Makro / GIA (Deviasi 0.0)...', delay: 600 },
-      { text: 'Mengaktifkan arsitektur 3-Stage Cascaded Macro-Micro Coupling...', delay: 850 },
-      { text: 'CASCADE-X ENGINE ONLINE // RANK #1 NASIONAL // CV: 0.26331 // LB: 0.25971', delay: 1100, highlight: true }
+      { text: 'Menginisialisasi CASCADE-X Core Engine v2.0...', delay: 100 },
+      { text: 'Memuat dataset spasial 429,303 sampel bangunan & 329 klaster wilayah...', delay: 300 },
+      { text: 'Mengonfirmasi hukum fisika tertutup: EUI Gas ≡ Gas Makro / GIA (Deviasi 0.0)...', delay: 550 },
+      { text: 'Memverifikasi arsitektur 3-Stage Cascaded Macro-Micro Energy Coupling...', delay: 800 },
+      { text: 'CASCADE-X CORE ONLINE // RANK #1 NASIONAL // CV: 0.25685 // LB: 0.25457', delay: 1050, highlight: true }
     ];
 
     logs.forEach((item, index) => {
@@ -129,7 +129,6 @@
     const size = (canvas.width = canvas.height = 360);
     const center = size / 2;
 
-    // Isometric 3D city buildings & energy grid nodes
     const buildings = [
       { x: -70, y: -40, z: -30, w: 28, h: 75, d: 28, type: 'commercial' },
       { x: -20, y: -60, z: -10, w: 32, h: 110, d: 32, type: 'highrise' },
@@ -155,7 +154,6 @@
       pulseScan += pulseDir;
       if (pulseScan > 130 || pulseScan < -130) pulseDir *= -1;
 
-      // Draw grid base platform
       ctx.save();
       ctx.translate(center, center + 40);
 
@@ -177,7 +175,7 @@
         };
       }
 
-      // Draw base ground grid
+      // Base ground grid
       const gridSpan = 110;
       const step = 22;
       ctx.strokeStyle = isDark ? 'rgba(0, 210, 255, 0.15)' : 'rgba(0, 163, 255, 0.12)';
@@ -199,7 +197,7 @@
         ctx.stroke();
       }
 
-      // Draw 3D Building wireframes
+      // Buildings
       buildings.forEach((b) => {
         const x = b.x;
         const z = b.z;
@@ -261,7 +259,7 @@
           ctx.stroke();
         }
 
-        // Top glowing energy node
+        // Top glowing node
         const topCenter = project(x, -h, z);
         ctx.beginPath();
         ctx.arc(topCenter.px, topCenter.py, 3, 0, Math.PI * 2);
@@ -269,7 +267,7 @@
         ctx.fill();
       });
 
-      // Energy transmission lines connecting building tops
+      // Inter-building grid lines
       ctx.strokeStyle = isDark ? 'rgba(0, 245, 160, 0.35)' : 'rgba(0, 180, 100, 0.3)';
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 4]);
@@ -311,11 +309,16 @@
       }
     }
 
-    // Update main logo image
+    // Update all logo instances with transparent versions
+    const logoSrc = newTheme === 'light' ? 'assets/logo/cascadex_logo_light_trans.png' : 'assets/logo/cascadex_logo_dark_trans.png';
     const mainLogo = document.getElementById('main-brand-logo');
-    if (mainLogo) {
-      mainLogo.src = newTheme === 'light' ? 'assets/logo/cascadex_logo_light.png' : 'assets/logo/cascadex_logo_dark.png';
-    }
+    if (mainLogo) mainLogo.src = logoSrc;
+
+    const heroLogo = document.getElementById('hero-brand-logo');
+    if (heroLogo) heroLogo.src = logoSrc;
+
+    const footerLogo = document.getElementById('footer-brand-logo');
+    if (footerLogo) footerLogo.src = logoSrc;
   };
 
   window.nav = function (pageId, el) {
@@ -338,6 +341,24 @@
     if (mobileDrawer) mobileDrawer.classList.toggle('open');
   };
 
+  window.toggleVizMode = function (boxId, mode) {
+    const box = document.getElementById(boxId);
+    if (!box) return;
+    const iframe = box.querySelector('.viz-iframe');
+    const img = box.querySelector('.viz-img');
+    const btns = box.querySelectorAll('.viz-toggle-btn');
+
+    btns.forEach((b) => b.classList.toggle('active', b.getAttribute('data-mode') === mode));
+
+    if (mode === 'interactive') {
+      if (iframe) iframe.style.display = 'block';
+      if (img) img.style.display = 'none';
+    } else {
+      if (iframe) iframe.style.display = 'none';
+      if (img) img.style.display = 'block';
+    }
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('cascadex-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -346,10 +367,15 @@
       themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
     }
 
+    const logoSrc = savedTheme === 'light' ? 'assets/logo/cascadex_logo_light_trans.png' : 'assets/logo/cascadex_logo_dark_trans.png';
     const mainLogo = document.getElementById('main-brand-logo');
-    if (mainLogo) {
-      mainLogo.src = savedTheme === 'light' ? 'assets/logo/cascadex_logo_light.png' : 'assets/logo/cascadex_logo_dark.png';
-    }
+    if (mainLogo) mainLogo.src = logoSrc;
+
+    const heroLogo = document.getElementById('hero-brand-logo');
+    if (heroLogo) heroLogo.src = logoSrc;
+
+    const footerLogo = document.getElementById('footer-brand-logo');
+    if (footerLogo) footerLogo.src = logoSrc;
 
     initBootloader();
     initCyberCanvas();

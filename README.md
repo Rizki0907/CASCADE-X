@@ -3,8 +3,8 @@
 
 [![Competition](https://img.shields.io/badge/Competition-DICE%20FEST%202026-00D2FF.svg)](https://www.kaggle.com/competitions)
 [![Rank](https://img.shields.io/badge/Preliminary%20Rank-%231%20National-00F5A0.svg)](#)
-[![CV Score](https://img.shields.io/badge/CV%20NRMSE-0.26331-brightgreen.svg)](#)
-[![Public LB](https://img.shields.io/badge/Public%20LB-0.25971-blue.svg)](#)
+[![CV Score](https://img.shields.io/badge/CV%20NRMSE-0.25685-brightgreen.svg)](#)
+[![Public LB](https://img.shields.io/badge/Public%20LB-0.25457-blue.svg)](#)
 [![Physics Consistency](https://img.shields.io/badge/Thermodynamic%20EUI%20Consistency-100.000%25-orange.svg)](#)
 
 ---
@@ -23,11 +23,11 @@
 **CASCADE-X** (*Coupled Adaptive Spatial-Energy Calculation & Analytics for Decarbonization Ecosystems*) adalah platform intelijen dan sistem pendukung keputusan (*Decision Support System*) transisi energi perkotaan nasional. 
 
 Platform ini memecahkan **The Urban Energy Transition Trilemma** melalui pemodelan *Multi-Output Regression* yang memprediksi 5 target energi nasional secara simultan dengan ketaatan mutlak terhadap hukum termodinamika fisika bangunan:
-1. `target_macro_gas_kwh`: Total konsumsi gas fosil tahunan ($kWh/\text{tahun}$)
-2. `target_macro_elec_kwh`: Proyeksi beban listrik makro tahunan ($kWh/\text{tahun}$)
-3. `target_eui_gas_kwh_per_sqm`: Intensitas energi gas per meter persegi lantai ($kWh/m^2$)
-4. `target_clean_building_ratio`: Proporsi bangunan bersertifikasi hijau ($\%$)
-5. `target_electric_heating_adoption`: Tingkat penetrasi pemanas listrik / *Heat Pump* ($\%$)
+1. `target_macro_gas_kwh`: Total konsumsi gas fosil tahunan ($kWh/\text{tahun}$) — NRMSE **0.24840**
+2. `target_macro_elec_kwh`: Proyeksi beban listrik makro tahunan ($kWh/\text{tahun}$) — NRMSE **0.31944**
+3. `target_eui_gas_kwh_per_sqm`: Intensitas energi gas per meter persegi lantai ($kWh/m^2$) — NRMSE **0.64969**
+4. `target_clean_building_ratio`: Proporsi bangunan bersertifikasi hijau ($\%$) — NRMSE **0.01361**
+5. `target_electric_heating_adoption`: Tingkat penetrasi pemanas listrik / *Heat Pump* ($\%$) — NRMSE **0.05292**
 
 ---
 
@@ -41,14 +41,14 @@ Platform ini memecahkan **The Urban Energy Transition Trilemma** melalui pemodel
    Injeksi proyeksi pengalihan beban pemanas gas ke beban listrik puncak trafo gardu induk PLN secara alami menangkap korelasi kuat lintas sektor.
 
 3. **Stratified Spatial Relativity & Leak-Free Empirical Bayes LOO:**
-   Validasi *Stratified 5-Fold GroupKFold* pada 329 klaster wilayah metropolitan dengan resolusi *exact subzone lookup* pada 91.86% data uji untuk adopsi *Heat Pump* (NRMSE historis 0.05994).
+   Validasi *Stratified 5-Fold GroupKFold* pada 329 klaster wilayah metropolitan dengan resolusi *exact subzone lookup* pada 91.86% data uji untuk adopsi *Heat Pump* (NRMSE historis 0.05292).
 
 ---
 
 ## 💻 Fitur Utama Web Dashboard
 1. **Overview & Kokpit Eksekutif:** Visualisasi 3D Mesh Wireframe Kota & Jaringan Energi Interaktif 60 FPS.
-2. **Eksplorasi Data & Heterogenitas Spasial:** Analisis sebaran 5 target, korelasi Pearson/Spearman, dan penjelajah 329 zona metropolitan.
-3. **Arsitektur Model & Benchmark Evolusi:** Perbandingan historis 18 eksperimen tim dari Baseline (CV 0.28043) hingga rekor sub-0.260 (CV 0.26331, LB 0.25971).
+2. **Eksplorasi Data & Heterogenitas Spasial:** Analisis sebaran 5 target, korelasi Pearson/Spearman, visualisasi interaktif Plotly + mode toggle PNG, dan penjelajah 329 zona metropolitan.
+3. **Arsitektur Model & Benchmark Evolusi:** Perbandingan historis 18 eksperimen tim dari Baseline (CV 0.28043) hingga rekor nasional (CV 0.25685, LB 0.25457).
 4. **Interpretabilitas XAI & Solusi Kebijakan Publik:** Kepentingan fitur global, TreeSHAP marginal attribution, Kurva MACC (*Marginal Abatement Cost Curve*), dan Roadmap Nasional 10 Tahun (2026–2035).
 5. **The What-If Policy Simulator:** Simulator interaktif berkecepatan komputasi $< 10\text{ ms}$ dengan verifikasi lampu hijau termodinamika dan rekomendasi kebijakan otomatis.
 6. **Dual Mode Design System:** Dukungan *Dark Mode* dan *Light Mode* penuh dengan palet warna resmi *Electric Cyan*, *Sustainable Mint*, dan *Deep Void Navy*.

@@ -1,85 +1,104 @@
 // CASCADE-X National Energy Transition Intelligence Data Store
+// Source: Official Academic Writeup Paper & Logbook opo yo.xlsx
 const CASCADE_DATA = {
   metadata: {
     team: 'opo yo',
-    institution: 'FMIPA Universitas Negeri Surabaya',
+    members: ['Muhammad Habib Nur Aiman', 'Rizki Piji Fathoni'],
+    institution: 'Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA), Universitas Negeri Surabaya',
     competition: 'DICE FEST 2026 Machine Learning Competition',
-    organizer: 'HMPS Sains Data UIN Raden Mas Said Surakarta',
-    rank: 'Rank #1 Nasional (Preliminary Round)',
-    cv_score: 0.26331,
-    public_lb_score: 0.25971,
+    organizer: 'HMPS Sains Data, FST UIN Raden Mas Said Surakarta',
+    rank: 'Peringkat #1 Nasional Babak Penyisihan',
+    cv_score: 0.25685,
+    public_lb_score: 0.25457,
+    score_diff: -0.00228,
     total_samples: 429303,
     total_features: 201,
-    num_zones: 329
+    num_zones: 329,
+    exact_identity_r2: 1.000000,
+    exact_identity_max_dev: '1.7e-13'
   },
   targets: {
     target_macro_gas_kwh: {
-      name: 'Total Konsumsi Gas Makro',
+      name: 'Total Konsumsi Gas Fosil Makro',
+      code: 'target_macro_gas_kwh',
       unit: 'kWh/tahun',
       sigma: 151750.04,
-      nrmse: 0.25454,
-      rmse: 38626.46,
+      nrmse: 0.24840,
+      rmse: 37694.76,
       mean: 230372.0,
       min: 4324,
       max: 999765,
-      color: '#ff9f43'
+      weight: '20%',
+      color: '#ff9f43',
+      description: 'Konsumsi energi termal gas alam jaringan pipa perkotaan tahunan'
     },
     target_macro_elec_kwh: {
       name: 'Proyeksi Beban Listrik Makro',
+      code: 'target_macro_elec_kwh',
       unit: 'kWh/tahun',
       sigma: 41725.37,
-      nrmse: 0.32198,
-      rmse: 13434.73,
+      nrmse: 0.31944,
+      rmse: 13328.52,
       mean: 63756.0,
       min: 2968,
       max: 396492,
-      color: '#00d2ff'
+      weight: '20%',
+      color: '#00d2ff',
+      description: 'Beban konsumsi listrik makro jaringan PLN, berkorelasi +0.887 dengan konsumsi gas'
     },
     target_eui_gas_kwh_per_sqm: {
-      name: 'Intensitas Energi Gas (EUI)',
+      name: 'Intensitas Energi Gas per Luas Lantai (EUI)',
+      code: 'target_eui_gas_kwh_per_sqm',
       unit: 'kWh/m²',
       sigma: 40.65,
-      nrmse: 0.66685,
-      rmse: 27.107,
+      nrmse: 0.64969,
+      rmse: 26.41,
       mean: 139.06,
       min: 5.12,
       max: 648.11,
-      color: '#0ea5e9'
+      weight: '20%',
+      color: '#0ea5e9',
+      description: 'Indikator intensitas fisik EUI ≡ Gas Makro / GIA (bld_dim_06) dengan korelasi 1.000000'
     },
     target_clean_building_ratio: {
       name: 'Proporsi Bangunan Bersertifikasi Hijau',
+      code: 'target_clean_building_ratio',
       unit: '%',
       sigma: 12.49,
-      nrmse: 0.01323,
-      rmse: 0.1652,
+      nrmse: 0.01361,
+      rmse: 0.17,
       mean: 90.76,
       min: 8.33,
       max: 100.0,
-      color: '#00f5a0'
+      weight: '20%',
+      color: '#00f5a0',
+      description: 'Tingkat sertifikasi efisiensi selubung bangunan, komplementer 100 - socio_demog_011'
     },
     target_electric_heating_adoption: {
       name: 'Tingkat Adopsi Pemanas Listrik / Heat Pump',
+      code: 'target_electric_heating_adoption',
       unit: '%',
       sigma: 7.18,
-      nrmse: 0.05994,
-      rmse: 0.4304,
+      nrmse: 0.05292,
+      rmse: 0.38,
       mean: 5.38,
       min: 0.0,
       max: 93.24,
-      color: '#10b981'
+      weight: '20%',
+      color: '#10b981',
+      description: 'Penetrasi pompa kalor elektrik substitusi boiler gas, dipetakan pada resolusi subzone'
     }
   },
   experiment_evolution: [
-    { id: 'Run 1 (Baseline)', cv: 0.28043, lb: 0.28410, model: 'Baseline LightGBM Default', date: '12 Okt 2026', desc: 'Model dasar pohon GBDT tunggal tanpa rekayasa fisika' },
-    { id: 'Run 2 (Habib Run 2)', cv: 0.28887, lb: 0.27769, model: 'Tri-Model GBDT + Harmonic Coupling', date: '13 Okt 2026', desc: 'Form factor, compactness, dan integrasi HVAC bauran' },
-    { id: 'Run 3 (Dicefest-3)', cv: 0.28976, lb: 0.28445, model: 'GBDT + TabResNet + Huber Loss EUI', date: '13 Okt 2026', desc: 'Uji coba Huber Loss pada EUI (Gagal, galat membesar)' },
-    { id: 'Run 4 (Habib Run 4)', cv: 0.28776, lb: 0.27754, model: 'LightGBM + CatBoost + Cascaded Gas->Elec', date: '13 Okt 2026', desc: 'Injeksi proyeksi gas ke model beban listrik' },
-    { id: 'Exp 1 (Piji Exp 1)', cv: 0.28745, lb: 0.27795, model: 'Tri-Model GBDT + Adaptive Coupling', date: '14 Okt 2026', desc: 'Harmonic coupling adaptif pada EUI Gas' },
-    { id: 'Exp 2 (Piji Exp 2)', cv: 0.28685, lb: 0.27795, model: 'Decoupled Dual-Ensemble + SLSQP Coupling', date: '14 Okt 2026', desc: 'Optimal closed-form coupling via SLSQP solver' },
-    { id: 'Exp 4 (Piji Exp 4)', cv: 0.28749, lb: 0.27854, model: 'Two-Stage True OOF Stacking + Physics Imputation', date: '14 Okt 2026', desc: 'Rekor gas, listrik, dan EUI serentak' },
-    { id: 'Exp 6 (Piji Exp 6)', cv: 0.26549, lb: 0.26180, model: 'Stratified 5-Fold + LOO Target Encoding + Exact Subzone', date: '14 Okt 2026', desc: 'Terobosan 91.86% exact subzone match heat pump' },
-    { id: 'Exp 8 (Piji Exp 8)', cv: 0.26331, lb: 0.25971, model: 'Tri-Model Diversity + Nested Inner OOF + Decile SLSQP', date: '15 Okt 2026', desc: 'Menembus batas sub-0.260 rekor all-time tim!' },
-    { id: 'Exp 18 (Submission Final)', cv: 0.26331, lb: 0.25971, model: 'Production Pipeline + Full Artifact Bundle Extraction', date: '20 Okt 2026', desc: 'Model final terevaluasi lengkap dengan XAI TreeSHAP' }
+    { id: 'Run 1 (Baseline)', cv: 0.28043, lb: 0.28410, model: 'Baseline LightGBM Default', date: '12 Okt 2026', desc: 'Model pohon GBDT dasar tanpa rekayasa fitur termodinamika.' },
+    { id: 'Run 2 (Habib Run 2)', cv: 0.28887, lb: 0.27769, model: 'Tri-Model GBDT + Harmonic Coupling', date: '13 Okt 2026', desc: 'Form factor, compactness, dan integrasi bauran sistem HVAC.' },
+    { id: 'Run 4 (Habib Run 4)', cv: 0.28776, lb: 0.27754, model: 'LightGBM + CatBoost + Cascaded Gas->Elec', date: '13 Okt 2026', desc: 'Inovasi cascaded stacking: proyeksi gas dijadikan fitur beban listrik.' },
+    { id: 'Exp 1 (Piji Exp 1)', cv: 0.28745, lb: 0.27795, model: 'Tri-Model GBDT + Adaptive Coupling', date: '14 Okt 2026', desc: 'Adaptive physics-informed harmonic coupling pada EUI Gas.' },
+    { id: 'Exp 2 (Piji Exp 2)', cv: 0.28685, lb: 0.27795, model: 'Decoupled Dual-Ensemble + SLSQP Solver', date: '14 Okt 2026', desc: 'Formulasi tertutup closed-form coupling EUI via optimizer SLSQP.' },
+    { id: 'Exp 6 (Piji Grandmaster)', cv: 0.26549, lb: 0.26180, model: 'Stratified 5-Fold + Exact Subzone Heat Pump', date: '14 Okt 2026', desc: 'Terobosan 91.86% exact subzone match memotong error Heat Pump hingga separuh.' },
+    { id: 'Exp 8 (Piji Exp 8)', cv: 0.26331, lb: 0.25971, model: 'Tri-Model GBDT + Nested Inner OOF + Decile SLSQP', date: '15 Okt 2026', desc: 'Menembus batas sub-0.260 dengan nested OOF physics-residual encoding.' },
+    { id: 'Exp 13 (Habib 7-Fold)', cv: 0.25840, lb: 0.25577, model: '7-Fold Tri-Model GBDT + Tri-Scale Cascaded Listrik', date: '16 Okt 2026', desc: 'Peningkatan partisi ke 7-fold stratified dan dekomposisi ganda beban listrik.' },
+    { id: 'Exp 17 (Piji Final Best)', cv: 0.25685, lb: 0.25457, model: '7-Fold Stratified Multi-Sector GBDT Super-Pipeline', date: '21 Okt 2026', desc: 'REKOR NASIONAL RESMI! Closed-form SLSQP decile coupling + exact subzone resolution.' }
   ],
   feature_importance: [
   {
