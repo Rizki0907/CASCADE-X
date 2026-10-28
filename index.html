@@ -282,6 +282,87 @@
     </div>
 
     <!-- ==========================================================================
+         PETA KOMANDO KEBIJAKAN // 4 MODUL OPERASIONAL CASCADE-X (SLIDE 10)
+         ========================================================================== -->
+    <div class="section-header-block" style="margin-top:28px">
+      <div class="section-pill">SLIDE 10 // PETA KOMANDO KEBIJAKAN</div>
+      <h2 class="section-title">4 Modul Operasional Kebijakan Publik CASCADE-X</h2>
+      <p class="section-desc">
+        Mengonversi output komputasi 3-Stage Cascaded Stacking menjadi peta komando kebijakan yang dapat langsung dieksekusi oleh Pemda, PT PLN (Persero), dan Kementerian ESDM.
+      </p>
+    </div>
+
+    <div class="command-modules-grid">
+      <!-- MODUL 1 -->
+      <div class="command-module-card module-1">
+        <div class="command-module-num">MODUL 01</div>
+        <h3 class="command-module-title">Spatial Priority Heatmap</h3>
+        <div class="command-module-stakeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          Pemda &amp; Dinas Tata Kota
+        </div>
+        <p class="command-module-desc">
+          Memfilter 330 <code>zone_region_id</code> dan &gt;150.000 <code>subzone_id</code> ke dalam <strong>Zona Merah</strong> (Critical Retrofit EUI &gt;155 kWh/m²), <strong>Zona Kuning</strong> (Grid Watch 110–155), dan <strong>Zona Hijau</strong> (Net-Zero Ready &lt;110).
+        </p>
+        <button type="button" class="btn-command-action" onclick="nav('eda'); if(window.filterSpatialZones) window.filterSpatialZones('red', document.querySelector('.spatial-filter-btn.filter-red'));">
+          <span>Buka Modul 1 (Spasial)</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- MODUL 2 -->
+      <div class="command-module-card module-2">
+        <div class="command-module-num">MODUL 02</div>
+        <h3 class="command-module-title">What-If &amp; Grid Load Simulator</h3>
+        <div class="command-module-stakeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          PT PLN (Persero)
+        </div>
+        <p class="command-module-desc">
+          Simulator interaktif untuk mensimulasikan adopsi Heat Pump per wilayah dan memantau estimasi lonjakan MWh beban puncak trafo lokal sebelum izin daya disetujui.
+        </p>
+        <button type="button" class="btn-command-action" onclick="nav('simulator');">
+          <span>Buka Modul 2 (Simulator PLN)</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- MODUL 3 -->
+      <div class="command-module-card module-3">
+        <div class="command-module-num">MODUL 03</div>
+        <h3 class="command-module-title">MACC Budget &amp; Subsidy Allocator</h3>
+        <div class="command-module-stakeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          Kementerian ESDM &amp; Kemenkeu
+        </div>
+        <p class="command-module-desc">
+          Kalkulator alokasi anggaran fiskal yang menghitung penurunan ton CO₂e dan penghematan GWh gas per nilai subsidi yang dikucurkan dengan optimalisasi MACC terintegrasi.
+        </p>
+        <button type="button" class="btn-command-action" onclick="nav('policy'); document.getElementById('module3-allocator')?.scrollIntoView({behavior:'smooth'});">
+          <span>Buka Modul 3 (MACC Allocator)</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- MODUL 4 -->
+      <div class="command-module-card module-4">
+        <div class="command-module-num">MODUL 04</div>
+        <h3 class="command-module-title">Subzone XAI Diagnostic Card</h3>
+        <div class="command-module-stakeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Audit Transparansi Publik &amp; Auditor
+        </div>
+        <p class="command-module-desc">
+          Menampilkan atribusi lokal TreeSHAP per subzone untuk menjamin seluruh rekomendasi intervensi fisik berbasis data empiris yang dapat diaudit publik secara objektif.
+        </p>
+        <button type="button" class="btn-command-action" onclick="nav('policy'); document.getElementById('module4-subzone-xai')?.scrollIntoView({behavior:'smooth'});">
+          <span>Buka Modul 4 (Subzone XAI)</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
          PROFIL TIM & KONTEKS KOMPETISI DICE FEST 2026
          ========================================================================== -->
     <div class="section-header-block" style="margin-top:28px">
@@ -387,19 +468,36 @@
       </p>
     </div>
 
-    <!-- PENJELAJAH SPASIAL 329 KLASTER (FULL 330 OPTIONS, NO CRASH) -->
+    <!-- PENJELAJAH SPASIAL 329 KLASTER (MODUL 1 // PEMDA & DINAS TATA KOTA) -->
     <div class="card-panel">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
         <div>
-          <h3 class="card-title">Penjelajah Spasial 329 Klaster Wilayah Metropolitan</h3>
-          <p class="card-subtitle">Pilih wilayah metropolitan untuk menganalisis karakteristik tipologi energi lokal secara instan:</p>
+          <span class="badge-tag tag-champion" style="margin-bottom:6px;display:inline-block">MODUL 1 // PEMDA &amp; DINAS TATA KOTA</span>
+          <h3 class="card-title">Spatial Priority Heatmap &amp; Cluster Audit (329 Klaster)</h3>
+          <p class="card-subtitle">Filter 329 klaster metropolitan dan &gt;150.000 subzone ke dalam zona prioritas dekarbonisasi:</p>
         </div>
         <span class="badge-tag tag-safe">SPATIAL RELATIVITY</span>
       </div>
 
+      <!-- FILTER CHIPS (SLIDE 10) -->
+      <div class="spatial-filter-bar">
+        <button type="button" class="spatial-filter-btn active" data-filter="all" onclick="filterSpatialZones('all', this)">
+          <span>Semua Klaster (329)</span>
+        </button>
+        <button type="button" class="spatial-filter-btn filter-red" data-filter="red" onclick="filterSpatialZones('red', this)">
+          <span>🔴 Zona Merah: Critical Retrofit (EUI &gt;155 kWh/m²)</span>
+        </button>
+        <button type="button" class="spatial-filter-btn filter-yellow" data-filter="yellow" onclick="filterSpatialZones('yellow', this)">
+          <span>🟡 Zona Kuning: Grid Watch (110–155 kWh/m²)</span>
+        </button>
+        <button type="button" class="spatial-filter-btn filter-green" data-filter="green" onclick="filterSpatialZones('green', this)">
+          <span>🟢 Zona Hijau: Net-Zero Ready (&lt;110 kWh/m²)</span>
+        </button>
+      </div>
+
       <div style="max-width:680px;margin-bottom:18px">
         <label for="zone-region-select" style="font-family:'Sora';font-size:0.8rem;font-weight:600;color:var(--brand-cyan);display:block;margin-bottom:6px">
-          PILIH KLASTER METROPOLITAN (329 ZONA):
+          PILIH KLASTER METROPOLITAN DALAM ZONA TERFILTER:
         </label>
         <select id="zone-region-select" class="sim-select"></select>
       </div>
@@ -411,6 +509,19 @@
         <div class="metric-card"><div class="metric-card-lbl">INTENSITAS EUI RATA-RATA</div><div id="zone-det-eui" class="metric-card-val">-</div></div>
         <div class="metric-card"><div class="metric-card-lbl">ADOPSI HEAT PUMP</div><div id="zone-det-hp" class="metric-card-val text-safe">-</div></div>
         <div class="metric-card"><div class="metric-card-lbl">GEDUNG HIJAU RATIO</div><div id="zone-det-clean" class="metric-card-val">-</div></div>
+      </div>
+
+      <!-- DYNAMIC ACTION BOX PEMDA & DINAS TATA KOTA -->
+      <div id="zone-action-box" class="zone-priority-action-box">
+        <span id="zone-action-badge" class="zone-priority-badge badge-red-zone">ZONA MERAH // CRITICAL RETROFIT</span>
+        <div>
+          <div id="zone-action-title" style="font-family:'Sora';font-weight:700;font-size:0.88rem;color:var(--text-primary);margin-bottom:3px">
+            Mandat Retrofit Insulasi Selubung &amp; Penggantian Kaca Ganda
+          </div>
+          <div id="zone-action-desc" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.5">
+            Wilayah ini memiliki intensitas energi gas rata-rata di atas 155 kWh/m². Kebijakan Pemda wajib memprioritaskan audit energi gedung komersial dan skema subsidi insulasi dinding sebelum izin instalasi pipa gas baru diterbitkan.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -819,6 +930,55 @@
       </div>
     </div>
 
+    <!-- ==========================================================================
+         MODUL 4 — SUBZONE XAI DIAGNOSTIC CARD (AUDIT TRANSPARANSI PUBLIK)
+         ========================================================================== -->
+    <div id="module4-subzone-xai" class="card-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+        <div>
+          <span class="badge-tag tag-champion" style="margin-bottom:6px;display:inline-block">MODUL 4 // AUDIT TRANSPARANSI PUBLIK</span>
+          <h3 class="card-title">Subzone XAI Diagnostic Card (Dekomposisi Lokal TreeSHAP)</h3>
+          <p class="card-subtitle">Audit atribusi kausalitas fisika lokal untuk menjamin akuntabilitas rekomendasi publik:</p>
+        </div>
+        <span class="badge-tag tag-safe">100% AUDIT COMPLIANT</span>
+      </div>
+
+      <div class="xai-diag-card">
+        <div class="xai-diag-header">
+          <div>
+            <label for="subzone-xai-select" style="font-family:'Sora';font-size:0.78rem;font-weight:700;color:var(--brand-cyan);display:block;margin-bottom:4px">
+              PILIH SUBZONE SPASIAL SAMPEL AUDIT:
+            </label>
+            <select id="subzone-xai-select" class="sim-select" style="min-width:320px" onchange="renderSubzoneShap(this.value)">
+              <option value="SUB_001_DENSE">Subzone #10421 — Pusat Kota Padat (Gas Mains Terkoneksi)</option>
+              <option value="SUB_042_HERITAGE">Subzone #28914 — Kawasan Heritage Pra-1919 (Dinding Bata Pejal)</option>
+              <option value="SUB_108_SUBURBAN">Subzone #67102 — Permukiman Suburban Baru (Pasca-1999)</option>
+              <option value="SUB_254_OFFGRID">Subzone #89201 — Wilayah Semi-Urban Tanpa Pipa Gas</option>
+            </select>
+          </div>
+          <div style="text-align:right">
+            <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-muted)">HASIL PREDIKSI ADOPSI HEAT PUMP:</div>
+            <div id="subzone-pred-hp" style="font-family:var(--font-mono);font-size:1.4rem;font-weight:800;color:var(--color-safe)">3.8%</div>
+            <div id="subzone-compliance-tag" class="badge-tag tag-safe" style="font-size:0.7rem;margin-top:2px">Fisika Sesuai Kausalitas</div>
+          </div>
+        </div>
+
+        <div style="font-family:var(--font-subheading);font-size:0.8rem;font-weight:700;color:var(--text-muted);margin-bottom:10px;text-transform:uppercase">
+          DEKOMPOSISI KONTRIBUSI MARGINAL FITUR LOKAL (TREESHAP VALUES):
+        </div>
+
+        <div id="subzone-shap-list" class="shap-waterfall-list">
+          <!-- Dynamically populated waterfall items -->
+        </div>
+
+        <div style="margin-top:14px;padding:10px 14px;background:var(--bg-surface);border-radius:8px;border:1px solid var(--border-subtle);font-size:0.78rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <span><strong>Baseline Global (E[f(x)]):</strong> 5.38%</span>
+          <span style="color:var(--brand-cyan)">• Verifikasi Kausalitas Fisika: <strong>LOLOS AUDIT TRANSPARANSI</strong></span>
+          <span style="color:var(--text-muted)">Algoritma TreeSHAP Exact Multi-Output</span>
+        </div>
+      </div>
+    </div>
+
     <!-- CHART 10: MACC CURVE -->
     <div class="card-panel">
       <div class="card-panel-header">
@@ -868,6 +1028,75 @@
       </div>
     </div>
 
+    <!-- ==========================================================================
+         MODUL 3 — MACC BUDGET & SUBSIDY ALLOCATOR (KEMENTERIAN ESDM & KEMENKEU)
+         ========================================================================== -->
+    <div id="module3-allocator" class="card-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+        <div>
+          <span class="badge-tag tag-champion" style="margin-bottom:6px;display:inline-block">MODUL 3 // KEMENTERIAN ESDM &amp; KEMENKEU</span>
+          <h3 class="card-title">MACC Budget &amp; Subsidy Allocator (Kalkulator Alokasi Anggaran Dekarbonisasi)</h3>
+          <p class="card-subtitle">Simulasikan dampak alokasi subsidi fiskal terhadap penurunan emisi CO₂e dan penghematan gas fosil perkotaan:</p>
+        </div>
+        <span class="badge-tag tag-safe">FISCAL OPTIMIZATION</span>
+      </div>
+
+      <div class="allocator-grid">
+        <!-- BUDGET INPUT PANEL -->
+        <div class="budget-input-panel">
+          <div class="budget-slider-head">
+            <span style="color:var(--text-primary)">NILAI ALOKASI SUBSIDI FISKAL:</span>
+            <span id="budget-amount-display" class="budget-amount-display">Rp 50 Miliar</span>
+          </div>
+          <input type="range" id="macc-budget-slider" class="sim-range-slider" min="5" max="500" step="5" value="50" oninput="calculateMaccBudget()">
+          <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);margin-top:6px">
+            <span>Rp 5 Miliar (Pilot Subzone)</span>
+            <span>Rp 250 Miliar (Tingkat Kota)</span>
+            <span>Rp 500 Miliar (Nasional)</span>
+          </div>
+
+          <div style="margin-top:16px;padding:12px;background:var(--bg-surface);border-radius:8px;border:1px solid var(--border-subtle);font-size:0.8rem;color:var(--text-secondary);line-height:1.55">
+            <strong style="color:var(--brand-cyan)">Prinsip Optimalisasi MACC:</strong> Algoritma memprioritaskan alokasi dana ke intervensi dengan biaya per ton CO₂e terendah terlebih dahulu (insulasi dinding pejal &minus;25 EUR/tCO₂e), kemudian ekspansi pompa kalor (+15.4 EUR), dan retrofit kaca ganda (+45.2 EUR).
+          </div>
+        </div>
+
+        <!-- BUDGET RESULTS PANEL -->
+        <div class="budget-results-panel">
+          <div class="alloc-metrics-row">
+            <div class="alloc-metric-card">
+              <div class="alloc-metric-lbl">TOTAL EMISI TERHINDAR</div>
+              <div id="alloc-co2-val" class="alloc-metric-val text-safe">124.5 kt CO₂e/th</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Reduksi gas rumah kaca</div>
+            </div>
+
+            <div class="alloc-metric-card">
+              <div class="alloc-metric-lbl">PENGHEMATAN GAS FOSIL</div>
+              <div id="alloc-gas-val" class="alloc-metric-val text-warning">738.2 GWh/th</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">Substitusi energi bersih</div>
+            </div>
+          </div>
+
+          <!-- BREAKDOWN BAR -->
+          <div class="alloc-breakdown-bar">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-subheading);font-size:0.8rem;font-weight:600">
+              <span style="color:var(--text-primary)">PROPORSI ALOKASI PROGRAM OPTIMAL:</span>
+              <span id="alloc-roi-val" style="font-family:var(--font-mono);color:var(--brand-cyan)">ROI 2.49 kt CO₂e / Miliar</span>
+            </div>
+            <div class="alloc-bar-track">
+              <div id="bar-insulation" class="alloc-seg insulation" style="width:52%" title="Insulasi Dinding Pejal (52%)"></div>
+              <div id="bar-heatpump" class="alloc-seg heatpump" style="width:34%" title="Elektrifikasi Heat Pump (34%)"></div>
+              <div id="bar-glazing" class="alloc-seg glazing" style="width:14%" title="Kaca Ganda (14%)"></div>
+            </div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:0.74rem;color:var(--text-secondary);margin-top:4px">
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:var(--color-safe)"></span> Insulasi Dinding (52%)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:var(--brand-cyan)"></span> Heat Pump (34%)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#A855F7"></span> Kaca Ganda (14%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ROADMAP 10 TAHUN -->
     <div class="section-header-block">
       <div class="section-pill">ROADMAP NASIONAL 2026–2035</div>
@@ -902,13 +1131,13 @@
     </div>
   </section>
 
-  <!-- ==================== PAGE 5: SIMULATOR ==================== -->
+  <!-- ==================== PAGE 5: SIMULATOR (MODUL 2) ==================== -->
   <section id="page-simulator" class="page-view">
     <div class="section-header-block">
-      <div class="section-pill">BAB 4 // THE WHAT-IF POLICY ENGINE</div>
-      <h2 class="section-title">Simulator Kebijakan &amp; Prediksi Interaktif (The What-If Engine)</h2>
+      <div class="section-pill">MODUL 2 // PT PLN (PERSERO) GRID LOAD ENGINE</div>
+      <h2 class="section-title">Interactive What-If &amp; Grid Load Simulator (PT PLN Persero)</h2>
       <p class="section-desc">
-        Uji skenario intervensi geometri gedung, era konstruksi, bauran pemanas, dan kondisi iklim ekstrem secara instan dengan verifikasi konsistensi hukum termodinamika murni.
+        Uji skenario intervensi geometri gedung, era konstruksi, bauran pemanas, dan adopsi Heat Pump secara instan dengan verifikasi beban puncak trafo lokal dan kepatuhan termodinamika.
       </p>
     </div>
 
@@ -1048,6 +1277,30 @@
           <div class="metric-card-lbl">PROPORSI SERTIFIKASI BANGUNAN HIJAU</div>
           <div id="res-clean-ratio" class="metric-card-val" style="color:#A855F7">-</div>
           <div class="metric-card-sub">Rasio kepatuhan lingkungan</div>
+        </div>
+
+        <!-- MODUL 2: PLN GRID SHOCK TELEMETRY BOX (PT PLN PERSERO) -->
+        <div id="pln-grid-box" class="pln-grid-box">
+          <div class="pln-grid-header">
+            <div class="pln-grid-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <span>TELEMETRI BEBAN TRAFO LOKAL // PT PLN (PERSERO)</span>
+            </div>
+            <span id="pln-grid-badge" class="badge-tag tag-safe">BEBAN NORMAL</span>
+          </div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-muted)">ESTIMASI LONJAKAN BEBAN TRAFO LOKAL:</div>
+              <div id="pln-grid-val" class="pln-grid-val text-cyan">+0.0 MWh / tahun (+0.0%)</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-muted)">STATUS IZIN TAMBAH DAYA:</div>
+              <div id="pln-grid-status" style="font-family:var(--font-mono);font-weight:700;font-size:0.88rem;color:var(--color-safe)">DISETUJUI</div>
+            </div>
+          </div>
+          <div id="pln-grid-recommendation" class="pln-grid-recommendation">
+            Beban listrik masih berada dalam kapasitas termal gardu distribusi lokal PLN. Penambahan pompa kalor aman tanpa perlu perkuatan kabel induk.
+          </div>
         </div>
 
         <!-- THERMODYNAMIC VERIFICATION BOX -->

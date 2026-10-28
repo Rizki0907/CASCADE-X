@@ -245,6 +245,9 @@
       }
     }
 
+    // Update Modul 2: PLN Grid Shock Telemetry
+    updatePlnGridTelemetry(res);
+
     // Recommendation Generator
     const recText = document.getElementById('sim-recommendation-text');
     if (recText) {
@@ -256,6 +259,74 @@
         recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Gedung ini berada pada kuadran inefisiensi termal tinggi (EUI ${res.euiGas.toFixed(1)} kWh/m²). Prioritas utama MACC: <em>Retrofit kaca ganda dan insulasi selubung</em> untuk memangkas intensitas gas sebelum konversi ke pompa kalor.`;
       } else {
         recText.innerHTML = `<strong>Rekomendasi Kebijakan:</strong> Profil gedung berada dalam standar efisiensi energi terdepan. Layak dipasangkan smart thermostat dan sertifikasi bangunan hijau tingkat utama.`;
+      }
+    }
+  }
+
+  function updatePlnGridTelemetry(res) {
+    const plnBox = document.getElementById('pln-grid-box');
+    const plnBadge = document.getElementById('pln-grid-badge');
+    const plnVal = document.getElementById('pln-grid-val');
+    const plnStatus = document.getElementById('pln-grid-status');
+    const plnRec = document.getElementById('pln-grid-recommendation');
+    if (!plnBox || !plnVal) return;
+
+    // Baseline electricity without heat pump: ~6,200 kWh/year
+    const baselineElec = 6200;
+    const addedKwh = Math.max(0, res.elecMacro - baselineElec);
+    const addedMwh = (addedKwh / 1000);
+    const pctSurge = (addedKwh / baselineElec) * 100;
+
+    plnVal.textContent = `+${addedMwh.toFixed(1)} MWh / tahun (+${pctSurge.toFixed(1)}%)`;
+
+    // Shock condition thresholds
+    if (res.heatPump > 65 || pctSurge > 55) {
+      plnBox.className = 'pln-grid-box alert-shock';
+      if (plnBadge) {
+        plnBadge.className = 'badge-tag';
+        plnBadge.style.background = 'rgba(239, 68, 68, 0.2)';
+        plnBadge.style.color = '#F87171';
+        plnBadge.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+        plnBadge.textContent = 'GRID SHOCK ALERT';
+      }
+      if (plnStatus) {
+        plnStatus.textContent = 'BERSYARAT (UPGRADE TRAFO)';
+        plnStatus.style.color = '#EF4444';
+      }
+      if (plnRec) {
+        plnRec.innerHTML = `<strong>Peringatan Lonjakan Beban Grid:</strong> Penetrasi pompa kalor tinggi (+${pctSurge.toFixed(1)}%) memicu risiko beban puncak gardu trafo melebihi 85% kapasitas termal. <em>PT PLN (Persero) wajib mensyaratkan instalasi Dynamic Load Management atau perkuatan trafo feeder sebelum menyetujui izin daya.</em>`;
+      }
+    } else if (res.heatPump > 25 || pctSurge > 20) {
+      plnBox.className = 'pln-grid-box';
+      if (plnBadge) {
+        plnBadge.className = 'badge-tag';
+        plnBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+        plnBadge.style.color = '#FBBF24';
+        plnBadge.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+        plnBadge.textContent = 'GRID WATCH';
+      }
+      if (plnStatus) {
+        plnStatus.textContent = 'DISETUJUI DENGAN MONITORING';
+        plnStatus.style.color = '#F59E0B';
+      }
+      if (plnRec) {
+        plnRec.innerHTML = `Lonjakan beban trafo terpantau moderat (+${addedMwh.toFixed(1)} MWh). Disarankan penerapan skema tarif Time-of-Use (ToU) untuk menggeser waktu pengisian pompa kalor ke tengah malam.`;
+      }
+    } else {
+      plnBox.className = 'pln-grid-box grid-safe';
+      if (plnBadge) {
+        plnBadge.className = 'badge-tag tag-safe';
+        plnBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+        plnBadge.style.color = '#34D399';
+        plnBadge.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+        plnBadge.textContent = 'BEBAN AMAN';
+      }
+      if (plnStatus) {
+        plnStatus.textContent = 'DISETUJUI PENUH';
+        plnStatus.style.color = 'var(--color-safe)';
+      }
+      if (plnRec) {
+        plnRec.textContent = 'Beban listrik masih berada dalam batas aman kapasitas termal gardu distribusi lokal PLN. Penambahan pompa kalor aman tanpa perlu perkuatan kabel induk.';
       }
     }
   }
